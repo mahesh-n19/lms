@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Render from './components/landing/render'
-import {Routes,Route} from 'react-router-dom'
+import {Routes,Route, Navigate} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import AuthProvider from './context/AuthContext'
@@ -29,6 +29,7 @@ function App() {
   <AuthProvider>
       <Routes>
 
+        <Route path='/' element={ <Navigate to='/login' /> } />
         <Route path='/login' element={ <Render /> }/>
 
         

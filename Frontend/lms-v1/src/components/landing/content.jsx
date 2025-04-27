@@ -8,14 +8,18 @@ export default function Content() {
   
   const {login} = useAuth();
   const [errorMsg,setErrorMsg] = useState("");
-  const form = useForm();
-  const {register, handleSubmit,formState,reset} = form;
+  
+  // const form = useForm();
+  // const {register, handleSubmit,formState : {isSubmitting} ,reset} = form;
 
-  const {errors} = formState;
+  const {register, handleSubmit, formState ,reset} = useForm();
+
+  const {errors, isSubmitting} = formState;
 
   const navigate = useNavigate();
 
   const formSubmit = async (data)=>{
+    
 
     const result = await loginService(data);
 
@@ -39,6 +43,7 @@ export default function Content() {
     }
 
     reset();
+    
   }
   
   return (
@@ -77,7 +82,23 @@ export default function Content() {
             <p className='error-message'>{errors.password?.message}</p>
           </div>
           
-          <button type='submit' className="btn btn-primary">Submit</button>
+          <button type='submit' className="btn btn-primary" disabled={isSubmitting}>
+
+               {
+                  isSubmitting ? (
+
+                    <>
+                      <span className="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                      <span role="status">Sign In</span>
+                    </>
+
+                  ) : ('Sign In') 
+               }
+              
+            
+            
+            
+          </button>
           <p>Don't have account? Click to register</p>
         </form>
 
