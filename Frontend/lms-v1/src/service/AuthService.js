@@ -26,3 +26,15 @@ export async function loginService(data)
 
 
 }
+export async function registerService(data){
+try {
+    const url= `${API_URL}/register`;
+    const body={'name':data.name,'email':data.email,'password':data.password};
+    const response=await axios.post(url,body);
+    return response.data;
+
+} catch (e) {
+    console.log('Exception occurred');
+    console.log(e);
+}
+}

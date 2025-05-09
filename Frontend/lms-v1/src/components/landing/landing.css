@@ -5,7 +5,7 @@
     background-color: #fefefe;
 }
 
-.landing-content
+.landing-content,.register-student
 {
     height: calc(100% - 100px);
     border: 1px solid red;
@@ -21,7 +21,7 @@
     background-color: #fefefe;
 }
 
-.login-form
+.login-form,.register-form
 {
     width: 400px;
     height: fit-content;
@@ -39,3 +39,4 @@
     color : red;
     
 }
+

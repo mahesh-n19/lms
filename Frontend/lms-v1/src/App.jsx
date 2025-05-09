@@ -20,6 +20,7 @@ import TeacherRender from './components/teacher/TeacherRender'
 
 import TeacherDashboard from './components/teacher/TeacherDashboard'
 import CreateClassroom from './components/teacher/CreateClassroom'
+import Register from './components/landing/register'
 
 function App() {
  
@@ -31,7 +32,7 @@ function App() {
 
         <Route path='/' element={ <Navigate to='/login' /> } />
         <Route path='/login' element={ <Render /> }/>
-
+        <Route path='/register' element={<Register/>}/>
         
             
             <Route path='/admin' element={<RouteGuard allowedRoles={['ROLE_ADMIN']}>

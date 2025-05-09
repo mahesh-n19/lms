@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import {useForm} from 'react-hook-form'
 import { loginService } from '../../service/AuthService';
 import { useAuth } from '../../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Content() {
   
@@ -99,7 +99,7 @@ export default function Content() {
             
             
           </button>
-          <p>Don't have account? Click to register</p>
+          <p>Don't have account? <Link to='/register'>Click to register</Link></p>
         </form>
 
       </div>
