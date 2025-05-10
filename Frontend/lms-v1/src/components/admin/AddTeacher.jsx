@@ -3,7 +3,7 @@ import React from 'react'
 export default function AddTeacher() {
   return (
     <div>
-        <h1>Add Teacher</h1>
+        <h1>Add Teacher Component</h1>
     </div>
   )
 }
