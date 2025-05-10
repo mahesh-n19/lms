@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "./header";
 import Footer from "./footer";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerService } from "../../service/AuthService";
 
 export default function Register() {
@@ -49,7 +49,7 @@ export default function Register() {
                   },
                 })}
               />
-              <p className="error-message">{errors.username?.message}</p>
+              <p className="error-message">{errors.name?.message}</p>
             </div>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">
@@ -69,7 +69,7 @@ export default function Register() {
                   },
                 })}
               />
-              <p className="error-message">{errors.username?.message}</p>
+              <p className="error-message">{errors.email?.message}</p>
             </div>
             <div className="mb-3">
               <label htmlFor="password" className="form-label">
@@ -88,7 +88,7 @@ export default function Register() {
                   },
                 })}
               />
-              <p className="error-message">{errors.username?.message}</p>
+              <p className="error-message">{errors.password?.message}</p>
             </div>
             <button
               type="submit"
@@ -107,6 +107,7 @@ export default function Register() {
                 "Register"
               )}
             </button>
+            <p>Already have an account? <Link to='/login'>Login</Link></p>
           </form>
         </div>
       </div>

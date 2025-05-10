@@ -27,14 +27,41 @@ export async function loginService(data)
 
 }
 export async function registerService(data){
-try {
-    const url= `${API_URL}/register`;
-    const body={'name':data.name,'email':data.email,'password':data.password};
-    const response=await axios.post(url,body);
-    return response.data;
+    try {
+        const url= `${API_URL}/register`;
+        const body={'name':data.name,'email':data.email,'password':data.password};
+        const response=await axios.post(url,body);
+        return response.data;
 
-} catch (e) {
-    console.log('Exception occurred');
-    console.log(e);
+    } catch (e) {
+        console.log('Exception occurred');
+        console.log(e);
+    }
 }
+
+
+export async function registerTeacherService(data)
+{
+    let response = "";
+    try
+    {
+        const token = sessionStorage.getItem('token');
+        const url= `${API_URL}/register-teacher`;
+        const body={
+                        'name':data.name,
+                        'email':data.email,
+                        'password':'Teacher@123'
+                };
+        response = await axios.post(url,body,{
+            headers : {
+                'Authorization' : `Bearer ${token}`
+            }
+        });
+        return response.data;
+    }
+    catch(e)
+    {
+       console.log(e);
+        return e.response.data;
+    }
 }
