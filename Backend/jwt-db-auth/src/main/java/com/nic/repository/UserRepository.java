@@ -1,5 +1,7 @@
 package com.nic.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,6 +16,6 @@ public interface UserRepository extends JpaRepository<User, Integer>{
 	public User findByEmail(String email);
 	
 	@Query(value="SELECT name,email from User where role = 'ROLE_TEACHER'", nativeQuery = true)
-	public RegisterTeacherDto getRegisteredTeachers();
+	public List<RegisterTeacherDto> getRegisteredTeachers();
 	
 }

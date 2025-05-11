@@ -12,7 +12,9 @@ export default function Sidebar() {
           <li>
             <NavLink to='/admin/add-teacher' >Add Teacher</NavLink>
           </li> 
-          <li>View Teacher</li> 
+          <li>
+            <NavLink to='/admin/view-teacher' >View Teacher</NavLink>  
+          </li> 
       </ul>
 
     </div>

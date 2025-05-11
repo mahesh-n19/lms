@@ -3,3 +3,20 @@ body
     margin: 0;
     padding: 0;
 }
+
+tbody, td, tfoot, th, thead, tr 
+{
+    border : 1px solid #b4b4b4 !important;
+    font-size: small;
+}
+
+.p-paginator
+{
+    justify-content: flex-start;
+    border: 1px solid #b4b4b4;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    border-top-width: 0px;
+}

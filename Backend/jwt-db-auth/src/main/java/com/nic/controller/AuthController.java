@@ -101,9 +101,20 @@ public class AuthController {
 		return userService.registerTeacher(user);
 	}
 	
+//	@PreAuthorize("hasRole('ADMIN')")
+//	@GetMapping("/registered-teachers")
+//	public ResponseDto getRegisteredTeacher() {
+//		System.out.println("Inside Controller");
+//		return userService.getRegisteredTeachers();
+//	}
+	
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/registered-teachers")
-	public ResponseDto getRegisteredTeacher() {
+	public ResponseDto getRegisteredTeachers()
+	{
+		System.out.println("API Hitt ");
 		return userService.getRegisteredTeachers();
 	}
+	
+	
 }

@@ -1,5 +1,7 @@
 package com.nic.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -76,10 +78,14 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public ResponseDto getRegisteredTeachers() {
-		RegisterTeacherDto obj=new RegisterTeacherDto();
-		obj=userRepo.getRegisteredTeachers();
+		
+		System.out.println("Inside service");
+		
+		List<RegisterTeacherDto> obj=userRepo.getRegisteredTeachers();
+		
 		ResponseDto response = new ResponseDto();
 		
+		System.out.println("X : "+obj.toString());
 		response.setStatus("success");
 		response.setStatusCode(HttpStatus.OK.value());
 		response.setMessage("Registered Teachers Fetched Successfully");

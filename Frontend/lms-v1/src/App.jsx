@@ -6,6 +6,10 @@ import Render from './components/landing/render'
 import {Routes,Route, Navigate} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
+import "primereact/resources/themes/lara-light-cyan/theme.css";
+import 'primereact/resources/primereact.min.css';
+
+
 import AuthProvider from './context/AuthContext'
 import RouteGuard from './context/routeGuard'
 import AdminRender from './components/admin/AdminRender'
@@ -21,6 +25,7 @@ import TeacherRender from './components/teacher/TeacherRender'
 import TeacherDashboard from './components/teacher/TeacherDashboard'
 import CreateClassroom from './components/teacher/CreateClassroom'
 import Register from './components/landing/register'
+import ViewTeacher from './components/admin/ViewTeacher'
 
 function App() {
  
@@ -42,6 +47,7 @@ function App() {
                 <Route path='' element={<AdminDashboard />} />
                 <Route path='dashboard' element={<AdminDashboard />} />
                 <Route path='add-teacher' element={<AddTeacher />} />
+                <Route path='view-teacher' element={<ViewTeacher />} />
                 <Route path='*' element={<AdminDashboard />} />
             </Route>
 
