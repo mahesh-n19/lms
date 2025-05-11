@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.nic.config.User;
+import com.nic.dto.RegisterTeacherDto;
 import com.nic.dto.RegisterUserDto;
 import com.nic.entity.ResponseDto;
 
@@ -69,6 +70,20 @@ public class UserServiceImpl implements UserService{
 		response.setMessage("Teacher registered successfully");
 		
 		
+		return response;
+	}
+
+
+	@Override
+	public ResponseDto getRegisteredTeachers() {
+		RegisterTeacherDto obj=new RegisterTeacherDto();
+		obj=userRepo.getRegisteredTeachers();
+		ResponseDto response = new ResponseDto();
+		
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		response.setMessage("Registered Teachers Fetched Successfully");
+		response.setData(obj);
 		return response;
 	}
 	
