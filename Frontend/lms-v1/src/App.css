@@ -20,3 +20,29 @@ tbody, td, tfoot, th, thead, tr
     padding-right: 0px;
     border-top-width: 0px;
 }
+
+.sidebar-icons
+{
+    height: 35px;
+}
+
+.sidebar-ul 
+{
+    padding-left: 0px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+.sidebar-li 
+{
+    display: flex;
+    gap : 20px;
+    align-items: center;
+    margin-left: 20px;
+}
+
+hr 
+{
+    opacity: 0.75 !important;
+}
