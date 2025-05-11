@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nic.config.CustomUserDetails;
 import com.nic.config.JwtUtils;
+import com.nic.dto.RegisterTeacherDto;
 import com.nic.dto.RegisterUserDto;
 import com.nic.entity.JwtRequest;
 import com.nic.entity.JwtResponse;
@@ -99,4 +101,9 @@ public class AuthController {
 		return userService.registerTeacher(user);
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
+	@GetMapping("/registered-teachers")
+	public ResponseDto getRegisteredTeacher() {
+		return userService.getRegisteredTeachers();
+	}
 }
