@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.nic.service.UserService;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -86,6 +87,14 @@ public class JwtUtils {
 				   .getPayload()
 				   .getSubject();
 		
+	}
+	
+	public Claims getPayloadFromJwt(String token)
+	{
+		return Jwts.parser().verifyWith((SecretKey) key())
+				   .build().
+				   parseClaimsJws(token).
+				   getBody();
 	}
 	
 	public boolean validateJwtToken(String token)
