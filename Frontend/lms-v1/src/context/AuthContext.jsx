@@ -8,6 +8,9 @@ export default function AuthProvider({children}) {
     const [userRole,setUserRole] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const [myClassroom, setMyClassroom] = useState([]);
+    const [fetchSidebar, setFetchSidebar] = useState(false);
+
     useEffect(()=>{
 
         const token = sessionStorage.getItem('token');
@@ -39,7 +42,7 @@ export default function AuthProvider({children}) {
     if (loading) return <div>Loading...</div>; // Or spinner
 
   return (
-    <AuthContext.Provider value={{isAuthenticated,userRole,login,logout}}>
+    <AuthContext.Provider value={{isAuthenticated,userRole,login,logout,myClassroom,setMyClassroom,fetchSidebar,setFetchSidebar}}>
         {children}
     </AuthContext.Provider>
   )
