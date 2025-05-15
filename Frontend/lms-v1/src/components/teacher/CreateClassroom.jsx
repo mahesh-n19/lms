@@ -1,23 +1,50 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { createClassroomService } from "../../service/ClassroomService";
+import { useAuth } from "../../context/AuthContext";
 
 export default function CreateClassroom() {
+
   const [alert, setAlert] = useState(false);
   const [alertMsg, setAlertMsg] = useState("");
   const [alertColor, setAlertColor] = useState(false);
+  
+  const {fetchSidebar,setFetchSidebar} = useAuth();
+
   const { register, handleSubmit,setValue, formState, reset } = useForm();
   const { errors, isSubmitting } = formState;
+  
   const generateClassroomCode = ()=>{
-    const randomSixDigit = Math.floor(100000 + Math.random() * 900000);
+    const randomSixDigit = Math.floor(100000 + Math.random() * 900000);
     return randomSixDigit;
   }
   const [classroomCode,setClassroomCode]=useState(generateClassroomCode());
   useEffect(()=>{
     setValue("classroomCode",generateClassroomCode())
   })
-  const formSubmit = (data) => {
+  const formSubmit = async (data) => {
     console.log(data);
-    setValue("classroomCode",generateClassroomCode())
+    setValue("classroomCode",generateClassroomCode());
+
+
+    const result = await createClassroomService(data);
+
+    if(result.statusCode != 200)
+    {
+        setAlert(true);
+        setAlertMsg("Failed to Create classroom");
+        setAlertColor(false);
+    }
+    else 
+    {
+        
+        setAlert(true);
+        setAlertMsg("Classroom created successfully");
+        setAlertColor(true);
+        setFetchSidebar(!fetchSidebar);
+        reset();
+    }
+
     reset();
   };
   return (
@@ -46,8 +73,8 @@ export default function CreateClassroom() {
         <form onSubmit={handleSubmit(formSubmit)} noValidate>
           <div className="row">
             <div className="col-4">
-              <label htmlFor="name" className="form-label">
-                Name
+              <label htmlFor="title" className="form-label">
+                Title
               </label>
               <input
                 type="text"
