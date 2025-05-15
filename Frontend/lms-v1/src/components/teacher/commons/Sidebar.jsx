@@ -49,18 +49,24 @@ export default function Sidebar() {
             <div className="accordion-item">
                <h2 className="accordion-header">
                 <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                    My Classroom
+                   <div className='my-classroom'>
+                        <img src="/icons/classroom.png" alt="Classroom Icon" width="50px" /> 
+                        <p>My Classroom</p>
+                   </div>
+                   
                 </button>
               </h2>
 
               <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
 
-                  <ul>
+                  <ul className='class-list-ul'>
 
                         {myClassroom.map((classroom)=>{
 
-                          return <li key={classroom.classRoomId}>
+                          return <li className='class-list' key={classroom.classRoomId}>
+
+                                    <img src="/icons/class.png" alt="Classroom" width="30px"/>
                                    <NavLink to={`/teacher/classroom/${classroom.classRoomId}`}>{classroom.classRoomCode} - {classroom.title} </NavLink>   
                                       
                                 </li>
