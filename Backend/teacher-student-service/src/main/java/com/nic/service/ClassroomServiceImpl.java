@@ -41,6 +41,19 @@ public class ClassroomServiceImpl implements ClassroomService{
 		return response;
 	}
 
+	@Override
+	public ResponseDto getClassroomDetails(int classroomId) {
+		ClassroomDetails classroom=new ClassroomDetails();
+		classroom=classroomDetailsRepo.getClassroomDetailsByClassroomId(classroomId);
+		ResponseDto response = new ResponseDto();
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		response.setMessage("classroom details fetched successfully");
+		response.setData(classroom);
+		
+		return response;
+	}
+
 	
 	
 	

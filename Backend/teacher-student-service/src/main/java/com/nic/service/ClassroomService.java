@@ -7,4 +7,5 @@ public interface ClassroomService {
 
 	public ResponseDto createClassroom(ClassroomDetailsDto obj, int userId);
 	
+	public ResponseDto getClassroomDetails(int classroomId);
 }
