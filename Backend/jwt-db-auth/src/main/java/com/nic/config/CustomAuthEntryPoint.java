@@ -31,23 +31,27 @@ public class CustomAuthEntryPoint implements AuthenticationEntryPoint{
 		String message = "";
 		int statusCode = -1;
 		
-		if(request.getAttribute("exception").equals("ExpiredJwtException"))
+		if("ExpiredJwtException".equals(request.getAttribute("exception")))
 		{
+			//"someValue".equals(request.getAttribute("someAttribute"))
 			message = "JWT token expired";
 			statusCode = HttpStatus.BAD_REQUEST.value();
 		}
-		else if(request.getAttribute("exception").equals("MalformedJwtException"))
-		{
+		else if("MalformedJwtException".equals(request.getAttribute("exception")))
+		{    
+			
 			message = "Malformed JWT Token";
 			statusCode = HttpStatus.BAD_REQUEST.value();
 		}
-		else if(request.getAttribute("exception").equals("UnsupportedJwtException"))
+		else if("UnsupportedJwtException".equals(request.getAttribute("exception")))
 		{
+			
 			message = "Unsupported JWT Token";
 			statusCode = HttpStatus.BAD_REQUEST.value();
 		}
-		else if(request.getAttribute("exception").equals("IllegalArgumentException"))
+		else if("IllegalArgumentException".equals(request.getAttribute("exception")))
 		{
+			
 			message = "Illegal argument exception";
 			statusCode = HttpStatus.BAD_REQUEST.value();
 		}
