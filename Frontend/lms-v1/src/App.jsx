@@ -26,6 +26,7 @@ import TeacherDashboard from './components/teacher/TeacherDashboard'
 import CreateClassroom from './components/teacher/CreateClassroom'
 import Register from './components/landing/register'
 import ViewTeacher from './components/admin/ViewTeacher'
+import Classroom from './components/teacher/Classroom'
 
 function App() {
  
@@ -69,6 +70,7 @@ function App() {
                 <Route path='' element={<TeacherDashboard />} />
                 <Route path='dashboard' element={<TeacherDashboard />} />
                 <Route path='create-classroom' element={<CreateClassroom />} />
+                <Route path='classroom/:id' element={<Classroom />} />
                 <Route path='*' element={<Dashboard />} />
 
             </Route>

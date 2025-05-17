@@ -46,3 +46,26 @@ hr
 {
     opacity: 0.75 !important;
 }
+
+.my-classroom
+{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    justify-content: center;
+}
+
+.class-list-ul
+{
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.class-list
+{
+    display: flex;
+    gap: 15px;
+    font-size: medium;
+}

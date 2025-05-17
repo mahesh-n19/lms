@@ -9,5 +9,6 @@ public interface UserService {
 	public ResponseDto registerUser(RegisterUserDto user);
 	public ResponseDto registerTeacher(RegisterUserDto user);
 	public User getUserDetailsByEmail(String email);
+	public ResponseDto getMyCreatedClassroom(int userId);
 
 }
