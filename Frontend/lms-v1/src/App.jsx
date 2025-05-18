@@ -27,6 +27,9 @@ import CreateClassroom from './components/teacher/CreateClassroom'
 import Register from './components/landing/register'
 import ViewTeacher from './components/admin/ViewTeacher'
 import Classroom from './components/teacher/Classroom'
+import CreateAssignment from './components/teacher/CreateAssignment'
+import Assignments from './components/teacher/Assignments'
+import Students from './components/teacher/Students'
 
 function App() {
  
@@ -70,7 +73,11 @@ function App() {
                 <Route path='' element={<TeacherDashboard />} />
                 <Route path='dashboard' element={<TeacherDashboard />} />
                 <Route path='create-classroom' element={<CreateClassroom />} />
-                <Route path='classroom/:id' element={<Classroom />} />
+                <Route path='classroom/:id' element={<Classroom />} >
+                    <Route path='' element={<Assignments />} />
+                    <Route path='create-assignment'  element={<CreateAssignment />}/>
+                    <Route path='students' element={<Students />} />
+                </Route>
                 <Route path='*' element={<Dashboard />} />
 
             </Route>
