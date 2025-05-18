@@ -57,8 +57,8 @@ export default function Sidebar() {
                 </button>
               </h2>
 
-              <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
+              <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div className="accordion-body">
 
                   <ul className='class-list-ul'>
 
@@ -67,7 +67,7 @@ export default function Sidebar() {
                           return <li className='class-list' key={classroom.classRoomId}>
 
                                     <img src="/icons/class.png" alt="Classroom" width="30px"/>
-                                   <NavLink to={`/teacher/classroom/${classroom.classRoomId}`}>{classroom.classRoomCode} - {classroom.title} </NavLink>   
+                                   <NavLink to={`/teacher/classroom/${classroom.classRoomId}`} >{classroom.classRoomCode} - {classroom.title} </NavLink>   
                                       
                                 </li>
 

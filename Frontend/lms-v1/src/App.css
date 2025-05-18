@@ -69,3 +69,27 @@ hr
     gap: 15px;
     font-size: medium;
 }
+
+.classroom-details
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.classroom-actions 
+{
+    display: flex;
+    gap: 10px;
+}
+
+.btn 
+{
+    color : white;
+}
+
+.classroom-actions
+{
+    text-decoration: none;
+    color : white;
+}
