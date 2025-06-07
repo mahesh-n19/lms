@@ -93,3 +93,9 @@ hr
     text-decoration: none;
     color : white;
 }
+
+.form-actions
+{
+    display: flex;
+    gap: 15px;
+}
