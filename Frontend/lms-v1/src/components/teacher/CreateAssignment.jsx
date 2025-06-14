@@ -60,7 +60,7 @@ export default function CreateAssignment() {
             </div>
 
 
-            <div className="col-4">
+            <div className="col-2">
                <label htmlFor="dueDate" className="form-label">Due date</label>
             
                 <input type='date' className="form-control" id="dueDate" name="dueDate"
@@ -72,6 +72,20 @@ export default function CreateAssignment() {
                                           })}
                 />
                 <p className="error-message">{errors.dueDate?.message}</p>
+            </div>
+
+            <div className="col-2">
+               <label htmlFor="maxMarks" className="form-label">Marks</label>
+            
+                <input type='number' className="form-control" id="maxMarks" name="maxMarks"
+                       autoComplete="off" {...register("maxMarks", {
+                                                                  required : {
+                                                                                value: true,
+                                                                                message: "Marks is required",
+                                                                },
+                                          })}
+                />
+                <p className="error-message">{errors.maxMarks?.message}</p>
             </div>
 
           </div>
