@@ -2,20 +2,68 @@ import React from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import Dropzone from './commons/Dropzone';
+import axios from 'axios';
+import { createAssignmentService } from '../../service/AssignmentService';
+import { useState } from 'react';
 
-export default function CreateAssignment() {
+export default  function CreateAssignment() {
 
     const {id} = useParams();
+
+    const [alert, setAlert] = useState(false);
+    const [alertMsg, setAlertMsg] = useState("");
+    const [alertColor, setAlertColor] = useState(false);
 
     const {register, handleSubmit, formState ,reset,control} = useForm();
 
     const {errors, isSubmitting} = formState;
 
-    const formSubmit = (data)=>{
+    const formSubmit = async (data)=>{
+
+      const formData = new FormData();
       
+     
+
       console.log(data);
 
       console.log(data.pdf[0].name);
+       const token = sessionStorage.getItem('token');
+
+
+          const assignmentDto = {
+          title: data.title,
+          description: data.description,
+          dueDate: data.dueDate,
+          marks: data.maxMarks, // assuming your backend accepts marks as double
+          classroomId: id,       // from useParams()
+        };
+
+        console.log("Assignment DTO : "+JSON.stringify(assignmentDto));
+
+        formData.append('assignmentDto', new Blob(
+          [JSON.stringify(assignmentDto)],
+          { type: 'application/json' }
+        ));
+
+    // Append the file
+        formData.append('assignment', data.pdf[0]);
+      const result = await createAssignmentService(formData);
+
+     if(result.statusCode != 200)
+     {
+        setAlert(true);
+        setAlertMsg("Failed to Create Assignment");
+        setAlertColor(false);
+     }
+     else 
+     {
+        setAlert(true);
+        setAlertMsg("Assignment created successfully");
+        setAlertColor(true);
+        reset();
+     }
+
+      // console.log("Response : "+result);
 
 
     }
@@ -24,6 +72,25 @@ export default function CreateAssignment() {
   return (
     <div className='container'>
       
+      {alert && (
+        <div
+          className={
+            alertColor
+              ? "alert alert-success alert-dismissible fade show"
+              : "alert alert-danger alert-dismissible fade show"
+          }
+          role="alert"
+        >
+          {alertMsg}
+          <button
+            type="button"
+            onClick={() => setAlert(false)}
+            className="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit(formSubmit)} noValidate>
 
