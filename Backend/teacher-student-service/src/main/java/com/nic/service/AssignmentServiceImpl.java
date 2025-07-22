@@ -1,10 +1,13 @@
 package com.nic.service;
 
 import java.io.File;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nic.dto.AssignmentDto;
+import com.nic.dto.GetAssignmentDto;
 import com.nic.entity.Assignment;
+import com.nic.entity.ClassroomDetails;
 import com.nic.entity.ResponseDto;
 import com.nic.repository.AssignmentRepo;
 
@@ -90,5 +95,25 @@ public class AssignmentServiceImpl implements AssignmentService {
  
 		return response;
 	}
-	
+
+	@Override
+	public List<Assignment> getAllAssignments(int classroomId) {
+		List<Assignment> assignment = new ArrayList<>();
+		assignment=assignmentRepo.getAssignmentsByClassroomId(classroomId);
+//		GetAssignmentDto getAssignments=new GetAssignmentDto();
+//		getAssignments.set;
+		
+		return assignment;
+	}
 }
+
+
+//ClassroomDetails classroom=new ClassroomDetails();
+//classroom=classroomDetailsRepo.getClassroomDetailsByClassroomId(classroomId);
+//ResponseDto response = new ResponseDto();
+//response.setStatus("success");
+//response.setStatusCode(HttpStatus.OK.value());
+//response.setMessage("classroom details fetched successfully");
+//response.setData(classroom);
+//
+//return response;
