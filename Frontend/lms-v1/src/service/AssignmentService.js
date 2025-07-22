@@ -3,6 +3,33 @@ import axios from 'axios';
 const API_URL = 'http://localhost:8091/api/v1'
 
 
+export async function getAssignmentsByClassroomIdService(id)
+{
+
+    try
+    {
+        const token = sessionStorage.getItem('token');
+        const url= `${API_URL}/classroom-assignment/${id}`;
+
+
+        const response = await axios.get(url,  {
+              headers: {
+                'Authorization' : `Bearer ${token}`
+                },
+            });
+
+            console.log("API Response : ",response);
+            console.log("API DATA  : ",response.data);
+            return response.data;
+    }
+    catch(e)
+    {
+        console.log(e);
+        return e.response.data;
+    }
+}
+
+
 export async function createAssignmentService(data)
 {
     try{
