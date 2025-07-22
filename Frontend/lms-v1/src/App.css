@@ -8,6 +8,7 @@ tbody, td, tfoot, th, thead, tr
 {
     border : 1px solid #b4b4b4 !important;
     font-size: small;
+    color: black;
 }
 
 .p-paginator

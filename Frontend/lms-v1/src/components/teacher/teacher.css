@@ -79,3 +79,17 @@
 {
     height: 50px;
 }
+
+.assignments-card-container 
+{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.assignments-container
+{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid red;
+}
