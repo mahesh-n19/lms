@@ -54,7 +54,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 	     entity.setAssignmentId(0);
 	     entity.setDueDate(formattedDate);
 	     
-	     String path="D:\\sunbeam\\lms\\lms_data\\"+assignmentDto.getClassroomId();
+	     String path="D:\\Drive(F)\\Sunbeam LMS\\lms\\lms_data\\"+assignmentDto.getClassroomId();
 
 	     entity.setFilePath(path);
 	     
