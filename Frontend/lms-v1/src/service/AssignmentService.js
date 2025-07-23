@@ -57,3 +57,32 @@ export async function createAssignmentService(data)
     }
 }
 
+
+export async function getAssignmentDetailsByAssignmentIdService(id)
+{
+
+    console.log("API Hittt ");
+    try
+    {
+        const token = sessionStorage.getItem('token');
+        const url= `${API_URL}/assignment/${id}`;
+
+
+        const response = await axios.get(url,  {
+              headers: {
+                'Authorization' : `Bearer ${token}`
+                },
+            });
+
+            // console.log("API Response : ",response);
+            console.log("API DATA  : ",response.data);
+            return response.data;
+    }
+    catch(e)
+    {
+        console.log(e);
+        return e.response.data;
+    }
+}
+
+

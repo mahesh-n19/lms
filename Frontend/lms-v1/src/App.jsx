@@ -30,6 +30,7 @@ import Classroom from './components/teacher/Classroom'
 import CreateAssignment from './components/teacher/CreateAssignment'
 import Assignments from './components/teacher/Assignments'
 import Students from './components/teacher/Students'
+import ViewAssginment from './components/teacher/ViewAssignment'
 
 function App() {
  
@@ -77,6 +78,7 @@ function App() {
                     <Route path='' element={<Assignments />} />
                     <Route path='create-assignment'  element={<CreateAssignment />}/>
                     <Route path='students' element={<Students />} />
+                    <Route path='view-assignment/:assignmentid' element={<ViewAssginment />} />
                 </Route>
                 <Route path='*' element={<Dashboard />} />
 

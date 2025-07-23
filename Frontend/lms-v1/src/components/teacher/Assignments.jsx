@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { getAssignmentsByClassroomIdService } from '../../service/AssignmentService';
 // import { getClassroomDetailsByClassroomIdService } from '../../service/ClassroomService';
 
@@ -41,15 +41,19 @@ export default function Assignments() {
               return(
                         <div className='container assignments-container'>
                             <div className='assign-col1'>
-                              <h5>{index+1}. {assignment.title}</h5>
-                              <p>{assignment.description}</p>  
+                                  <NavLink className="nav-assignment" to={`/teacher/classroom/${id}/view-assignment/${assignment.assignmentId}`}>
+                                  
+                                    <h5>{index+1}. {assignment.title}</h5>
+                                  </NavLink>
+                             
+                                    <p>{assignment.description}</p>  
+                            
                             </div>
 
                             <div className='assign-col2'>
                                 <p><b>Due date : {assignment.dueDate}</b></p>
                                 <p><b>Marks : {assignment.maxMarks}</b></p>
                             </div>
-
 
                         </div>
 
