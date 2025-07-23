@@ -48,21 +48,20 @@ public class AssignmentServiceImpl implements AssignmentService {
 		entity.setMaxMarks((int)assignmentDto.getMarks());
 		
 		
+		
 		SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
-		 String formattedDate = formater.format(assignmentDto.getDueDate());
-	     System.out.println("Date formatted : "+formattedDate);
+		
+//		String formattedDate = formater.format(assignmentDto.getDueDate());
+//	     System.out.println("Date formatted : "+formattedDate);
 	     entity.setAssignmentId(0);
-	     entity.setDueDate(formattedDate);
-	     
+//	     entity.setDueDate(formattedDate);
+		
 	     String path="D:\\Drive(F)\\Sunbeam LMS\\lms\\lms_data\\"+assignmentDto.getClassroomId();
 
 	     entity.setFilePath(path);
 	     
-	     System.out.println("Entity : "+entity);
-		
+	     
 		 assignmentRepo.save(entity);
-		 
-		 System.out.println("after save");
 		 
 		 
 		 try
@@ -87,7 +86,6 @@ public class AssignmentServiceImpl implements AssignmentService {
 			 return response;
 		 }
 		 
-		System.out.println("entity : "+entity);
 		
 		
 		response.setStatusCode(HttpStatus.OK.value());
@@ -105,6 +103,12 @@ public class AssignmentServiceImpl implements AssignmentService {
 		
 		return assignment;
 	}
+	
+	public AssignmentDto getAssignmentDetailsByAssignmentId(int assignmentId)
+	{
+		return assignmentRepo.getAssignmentByAssignmentId(assignmentId);
+	}
+	
 }
 
 
