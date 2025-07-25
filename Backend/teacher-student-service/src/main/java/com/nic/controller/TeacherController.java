@@ -39,9 +39,15 @@ public class TeacherController {
 	{
 		
 		String token = authHeader.replace("Bearer ","");
-		Claims payload = jwtUtils.getPayloadFromJwt(token);
+		
+		System.out.println("Token With bearer : "+authHeader);
+		Claims payload = jwtUtils.getPayloadFromJwt(authHeader);
+		
+		System.out.println("Payload : "+payload);
 		int userId = Integer.parseInt(payload.get("userid").toString());
 
+		System.out.println("User ID : "+userId);
+		
 		
 		return classRoomService.createClassroom(obj, userId);
 	}
