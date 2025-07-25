@@ -14,4 +14,7 @@ public interface ClassroomDetailsRepo extends JpaRepository<ClassroomDetails, In
 	
 	@Query(value="select * from classroom_details c where c.classroom_id=?1",nativeQuery = true)
 	public ClassroomDetails getClassroomDetailsByClassroomId(int classroomId);
+	
+	@Query(value="FROM ClassroomDetails c where c.classRoomCode=?1 ")
+	public ClassroomDetails getClassroomByClassroomCode(String classroomCode);
 }

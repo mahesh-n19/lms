@@ -54,9 +54,12 @@ public class AssignmentServiceImpl implements AssignmentService {
 //		String formattedDate = formater.format(assignmentDto.getDueDate());
 //	     System.out.println("Date formatted : "+formattedDate);
 	     entity.setAssignmentId(0);
+
 //	     entity.setDueDate(formattedDate);
-		
-	     String path="D:\\Drive(F)\\Sunbeam LMS\\lms\\lms_data\\"+assignmentDto.getClassroomId();
+	     
+	     
+	     String path="C:\\Users\\iamaj\\OneDrive\\Desktop\\sunbeam cdac\\cdac project\\lms\\lms_data\\"+assignmentDto.getClassroomId();
+
 
 	     entity.setFilePath(path);
 	     
