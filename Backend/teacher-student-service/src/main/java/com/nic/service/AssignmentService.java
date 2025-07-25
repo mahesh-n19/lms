@@ -13,4 +13,6 @@ public interface AssignmentService {
   public ResponseDto createAssignment(AssignmentDto dto,MultipartFile pdfFile);
 
   public List<Assignment> getAllAssignments(int classroomId); 
+  
+  public AssignmentDto getAssignmentDetailsByAssignmentId(int assignmentId);
 }
