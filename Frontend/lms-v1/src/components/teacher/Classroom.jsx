@@ -29,6 +29,7 @@ export default function Classroom() {
             <button className='btn btn-success'> <NavLink className="classroom-actions" to={`/teacher/classroom/${id}`} >Home</NavLink> </button>
             <button className="btn btn-primary"> <NavLink className="classroom-actions" to={`/teacher/classroom/${id}/students`} >  Students </NavLink> </button>
             <button className="btn btn-danger"><NavLink className="classroom-actions" to={`/teacher/classroom/${id}/create-assignment`} >Add Assignment</NavLink></button>
+            {/* <button className="btn btn-danger"><NavLink className="classroom-actions" to={`/teacher/classroom/${id}/view-assginment`} >View Assignment</NavLink></button> */}
         </div>
           
       </div>
