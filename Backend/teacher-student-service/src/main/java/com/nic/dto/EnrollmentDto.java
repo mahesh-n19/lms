@@ -9,12 +9,14 @@ import lombok.NoArgsConstructor;
 public class EnrollmentDto {
 
 	private int studentId;
-	private String StudentName;
+	private String studentName;
+	String emailId;
 	private String status;
 	
-	public EnrollmentDto(int studentId, String studentName, String status) {
+	public EnrollmentDto(int studentId, String studentName, String emailId, String status) {
 		this.studentId = studentId;
-		StudentName = studentName;
+		this.studentName = studentName;
+		this.emailId = emailId;
 		this.status = status;
 	}
 	

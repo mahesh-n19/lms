@@ -95,7 +95,7 @@ export default function JoinClassroom() {
                   Classroom Code
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
                   id="classroomCode"
                   name="classroomCode"
@@ -110,8 +110,11 @@ export default function JoinClassroom() {
                 <p className="error-message">{errors.classroomCode?.message}</p>
               </div>
 
-              <div className='col-4'>
-                  <div className="create-classroom">
+              </div>
+                
+            <div className='row'>
+              <div className='col-4 jc-upper-div'>
+                  <div className="join-classroom">
                       <button type="submit" className="btn btn-primary">Create</button>
                       <button type="reset" className="btn btn-danger">Reset</button>
                 </div>

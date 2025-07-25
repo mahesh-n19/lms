@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nic.dto.EnrollmentActionDto;
 import com.nic.dto.JoinClassroomDto;
 import com.nic.entity.ResponseDto;
 import com.nic.service.StudentService;
@@ -41,4 +42,28 @@ public class StudentController {
 	public ResponseDto getPendingEnrollmentsByClassroomId(@PathVariable ("id") int classroomId ) {
 		return studentService.getPendingEnrollmentsByClassroomId(classroomId);
 	}
+	
+	@PreAuthorize("hasRole('TEACHER')")
+	@GetMapping("/get-approved-enrollments/{id}")
+	public ResponseDto getApprovedEnrollementsByClassroomId(@PathVariable ("id") int classroomId )
+	{
+		return studentService.getApprovedEnrollementsByClassroomId(classroomId);
+	}
+	
+	@PreAuthorize("hasRole('TEACHER')")
+	@PostMapping("/approve-student")
+	public ResponseDto approveStudentEnrollment(@RequestBody EnrollmentActionDto enrollment)
+	{
+		
+		return studentService.approveStudentEnrollment(enrollment.getClassroomId(),enrollment.getStudentId());
+	}
+	
+	@PreAuthorize("hasRole('TEACHER')")
+	@PostMapping("/reject-student")
+	public ResponseDto rejectStudentEnrollment(@RequestBody EnrollmentActionDto enrollment)
+	{
+		
+		return studentService.rejectStudentEnrollment(enrollment.getClassroomId(),enrollment.getStudentId());
+	}
+	
 }
