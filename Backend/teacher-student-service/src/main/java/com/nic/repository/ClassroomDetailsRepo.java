@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.nic.entity.ClassroomDetails;
 
+
+
 public interface ClassroomDetailsRepo extends JpaRepository<ClassroomDetails, Integer>{
 
 	@Query(value="SELECT * FROM classroom_details c where c.teacher_id=?1 ", nativeQuery = true)

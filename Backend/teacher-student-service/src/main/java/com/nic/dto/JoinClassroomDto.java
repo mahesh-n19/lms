@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 public class JoinClassroomDto {
 
 	private String classroomCode;
-	private int studentId;
+	
 	
 	
 }

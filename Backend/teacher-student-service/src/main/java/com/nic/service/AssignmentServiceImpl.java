@@ -16,9 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nic.dto.AssignmentDto;
-import com.nic.dto.GetAssignmentDto;
 import com.nic.entity.Assignment;
-import com.nic.entity.ClassroomDetails;
 import com.nic.entity.ResponseDto;
 import com.nic.repository.AssignmentRepo;
 
@@ -58,7 +56,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 //	     entity.setDueDate(formattedDate);
 	     
 	     
-	     String path="C:\\Users\\iamaj\\OneDrive\\Desktop\\sunbeam cdac\\cdac project\\lms\\lms_data\\"+assignmentDto.getClassroomId();
+	     String path="D:\\Drive(F)\\Sunbeam LMS\\lms\\lms_data\\"+assignmentDto.getClassroomId();
 
 
 	     entity.setFilePath(path);
@@ -101,8 +99,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 	public List<Assignment> getAllAssignments(int classroomId) {
 		List<Assignment> assignment = new ArrayList<>();
 		assignment=assignmentRepo.getAssignmentsByClassroomId(classroomId);
-//		GetAssignmentDto getAssignments=new GetAssignmentDto();
-//		getAssignments.set;
+
 		
 		return assignment;
 	}
@@ -113,14 +110,3 @@ public class AssignmentServiceImpl implements AssignmentService {
 	}
 	
 }
-
-
-//ClassroomDetails classroom=new ClassroomDetails();
-//classroom=classroomDetailsRepo.getClassroomDetailsByClassroomId(classroomId);
-//ResponseDto response = new ResponseDto();
-//response.setStatus("success");
-//response.setStatusCode(HttpStatus.OK.value());
-//response.setMessage("classroom details fetched successfully");
-//response.setData(classroom);
-//
-//return response;
