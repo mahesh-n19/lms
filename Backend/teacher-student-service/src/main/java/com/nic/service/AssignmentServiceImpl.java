@@ -101,19 +101,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 		List<Assignment> assignment = new ArrayList<>();
 		assignment=assignmentRepo.getAssignmentsByClassroomId(classroomId);
 //		GetAssignmentDto getAssignments=new GetAssignmentDto();
-//		getAssignments.set;
-		
+//		getAssignments.set;		
 		return assignment;
 	}
 }
-
-
-//ClassroomDetails classroom=new ClassroomDetails();
-//classroom=classroomDetailsRepo.getClassroomDetailsByClassroomId(classroomId);
-//ResponseDto response = new ResponseDto();
-//response.setStatus("success");
-//response.setStatusCode(HttpStatus.OK.value());
-//response.setMessage("classroom details fetched successfully");
-//response.setData(classroom);
-//
-//return response;
