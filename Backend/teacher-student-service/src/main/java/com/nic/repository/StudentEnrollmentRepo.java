@@ -20,6 +20,9 @@ public interface StudentEnrollmentRepo extends JpaRepository<StudentEnrollment, 
 	@Query("Select new com.nic.dto.PendingEnrollmentDto(C.title, C.classRoomCode , S.status) FROM ClassroomDetails C INNER JOIN StudentEnrollment S ON C.classRoomId = S.classroomId Where S.studentId = ?1 and ( S.status='D' or S.status = 'R' ) ")
 	public List<PendingEnrollmentDto> getPendingEnrollmentDetails(int studentId);
 	
-	@Query("select new com.nic.dto.EnrollmentDto(U.userId,U.name,E.status) from User U Inner Join StudentEnrollment E On E.studentId=U.userId where E.status='D'")
+	@Query("select new com.nic.dto.EnrollmentDto(U.userId,U.name,U.email,E.status) from User U Inner Join StudentEnrollment E On E.studentId=U.userId where E.status='D' and E.classroomId=?1")
 	public List<EnrollmentDto>  getPendingEnrollmentsByClassroomId(int classroomId);
+	
+	@Query("SELECT new com.nic.dto.EnrollmentDto(U.userId,U.name,U.email, E.status) from User U Inner Join StudentEnrollment E On E.studentId=U.userId where E.status='A' and E.classroomId=?1 ")
+	public List<EnrollmentDto> getApprovedEnrollmentsByClassroomId(int classroomId);
 }

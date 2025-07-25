@@ -9,4 +9,7 @@ public interface StudentService {
 	public ResponseDto joinClassroom(JoinClassroomDto joinClassroomDto,String token);
 	public ResponseDto getEnrollmentStatus(String token);
 	public ResponseDto getPendingEnrollmentsByClassroomId(int classroomId);
+	public ResponseDto approveStudentEnrollment(int classroomId, int studentId);
+	public ResponseDto rejectStudentEnrollment(int classroomId, int studentId);
+	public ResponseDto getApprovedEnrollementsByClassroomId(int classroomId);
 }

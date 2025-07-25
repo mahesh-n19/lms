@@ -31,6 +31,8 @@ import CreateAssignment from './components/teacher/CreateAssignment'
 import Assignments from './components/teacher/Assignments'
 import Students from './components/teacher/Students'
 import ViewAssginment from './components/teacher/ViewAssignment'
+import EnrolledStudents from './components/teacher/EnrolledStudents'
+import PendingStudents from './components/teacher/PendingStudents'
 
 function App() {
  
@@ -77,7 +79,10 @@ function App() {
                 <Route path='classroom/:id' element={<Classroom />} >
                     <Route path='' element={<Assignments />} />
                     <Route path='create-assignment'  element={<CreateAssignment />}/>
-                    <Route path='students' element={<Students />} />
+                    <Route path='students' element={<Students />} >
+                        <Route path='' element={<EnrolledStudents/>}/>
+                        <Route path='pending' element={<PendingStudents />}/>
+                    </Route>
                     <Route path='view-assignment/:assignmentid' element={<ViewAssginment />} />
                 </Route>
                 <Route path='*' element={<Dashboard />} />

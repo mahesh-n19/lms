@@ -18,6 +18,7 @@ import com.nic.repository.ClassroomDetailsRepo;
 import com.nic.repository.StudentEnrollmentRepo;
 
 import io.jsonwebtoken.Claims;
+import jakarta.transaction.Transactional;
 
 @Service
 public class StudentServiceImpl implements StudentService{
@@ -31,7 +32,7 @@ public class StudentServiceImpl implements StudentService{
 	@Autowired
 	JwtUtils jwtUtils;
 	
-	
+	@Transactional
 	@Override
 	public ResponseDto joinClassroom(JoinClassroomDto joinClassroomDto, String authHeader) {
 		
@@ -46,15 +47,15 @@ public class StudentServiceImpl implements StudentService{
 		}
 		else 
 		{
-			System.out.println("Token : "+authHeader);
+			
 			
 			String token = authHeader.replace("Bearer ","").trim();
 			Claims payload = jwtUtils.getPayloadFromJwt(token);
 			
-			System.out.println("Payload : "+payload);
+			
 			int userId = Integer.parseInt(payload.get("userid").toString());
 			
-			System.out.println("User ID : "+userId);
+			
 			
 			StudentEnrollment alreadyEnroll = studentEnrollmentRepo.getEnrollmentDetailsByClassroomIdAndStudentId(classroom.getClassRoomId(), userId);
 			
@@ -88,16 +89,16 @@ public class StudentServiceImpl implements StudentService{
 		return response;
 	}
 
-
+	@Transactional
 	@Override
 	public ResponseDto getEnrollmentStatus(String authHeader) {
 		
 		String token = authHeader.replace("Bearer ","").trim();
 		Claims payload = jwtUtils.getPayloadFromJwt(token);
 		
-		System.out.println("Payload : "+payload);
+		
 		int userId = Integer.parseInt(payload.get("userid").toString());
-		System.out.println("User ID  : "+userId);
+		
 		
 		List<PendingEnrollmentDto> pendingEnrollments=studentEnrollmentRepo.getPendingEnrollmentDetails(userId);
 		
@@ -109,7 +110,7 @@ public class StudentServiceImpl implements StudentService{
 		return response;
 	}
 
-
+	@Transactional
 	@Override
 	public ResponseDto getPendingEnrollmentsByClassroomId(int classroomId) {
 		
@@ -121,5 +122,60 @@ public class StudentServiceImpl implements StudentService{
 		response.setStatusCode(HttpStatus.OK.value());
 		return response;
 	}
+
+	@Transactional
+	@Override
+	public ResponseDto getApprovedEnrollementsByClassroomId(int classroomId) {
+		
+		List<EnrollmentDto> enrollments=studentEnrollmentRepo.getApprovedEnrollmentsByClassroomId(classroomId);
+		ResponseDto response=new ResponseDto();
+		response.setData(enrollments);
+		response.setMessage("Approved enrollments fetched successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		return response;
+	}
+	
+
+	@Transactional
+	@Override
+	public ResponseDto approveStudentEnrollment(int classroomId, int studentId) {
+		
+		
+		StudentEnrollment enrollment = studentEnrollmentRepo.getEnrollmentDetailsByClassroomIdAndStudentId(classroomId, studentId);
+		
+		
+		
+		enrollment.setStatus("A");
+		
+		ResponseDto response=new ResponseDto();
+		response.setMessage("Enrollment accepted successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		
+		return response;
+	}
+
+	@Transactional
+	@Override
+	public ResponseDto rejectStudentEnrollment(int classroomId, int studentId) {
+		
+		
+		
+		StudentEnrollment enrollment = studentEnrollmentRepo.getEnrollmentDetailsByClassroomIdAndStudentId(classroomId, studentId);
+		
+		
+		
+		enrollment.setStatus("R");
+		
+		ResponseDto response=new ResponseDto();
+		response.setMessage("Enrollment rejected successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		
+		return response;
+	}
+
+	
 
 }

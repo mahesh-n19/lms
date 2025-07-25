@@ -71,3 +71,77 @@ export async function getPendingEnrollmentByClassroomIdService(id)
         return e.response.data;
     }
 }
+
+
+export async function getApprovedEnrollmentByClassroomIdService(id)
+{
+    try{
+             const token = sessionStorage.getItem('token');
+             const url= `${API_URL}/get-approved-enrollments/${id}`;
+
+             const response = await axios.get(url,{
+                headers : {
+                'Authorization' : `Bearer ${token}`
+                }
+             })
+            
+             return response.data;
+    }
+    catch(e)
+    {
+         console.log(e);
+        return e.response.data;
+    }
+}
+
+export async function approveEnrollmentByClassroomIdAndStudentIdService(classroomId, studentId)
+{
+    try{
+             const token = sessionStorage.getItem('token');
+             const url= `${API_URL}/approve-student`;
+
+             const body = {
+                            'classroomId' : classroomId, 
+                            'studentId' : studentId
+                        };
+
+             const response = await axios.post(url,body,{
+                headers : {
+                'Authorization' : `Bearer ${token}`
+                }
+             })
+            
+             return response.data;
+    }
+    catch(e)
+    {
+         console.log(e);
+        return e.response.data;
+    }
+}
+
+export async function rejectEnrollmentByClassroomIdAndStudentIdService(classroomId, studentId)
+{
+    try{
+             const token = sessionStorage.getItem('token');
+             const url= `${API_URL}/reject-student`;
+
+             const body = {
+                            'classroomId' : classroomId, 
+                            'studentId' : studentId
+                        };
+
+             const response = await axios.post(url,body,{
+                headers : {
+                'Authorization' : `Bearer ${token}`
+                }
+             })
+            
+             return response.data;
+    }
+    catch(e)
+    {
+         console.log(e);
+        return e.response.data;
+    }
+}
