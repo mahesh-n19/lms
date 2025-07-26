@@ -7,5 +7,5 @@ import com.nic.entity.StudentEnrollment;
 
 @Repository
 public interface StudentEnrollmentRepo extends JpaRepository<StudentEnrollment, Long> {
-
+   
 }
