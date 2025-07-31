@@ -33,6 +33,7 @@ import Students from './components/teacher/Students'
 import ViewAssginment from './components/teacher/ViewAssignment'
 import EnrolledStudents from './components/teacher/EnrolledStudents'
 import PendingStudents from './components/teacher/PendingStudents'
+import Home from './components/landing/home'
 
 function App() {
  
@@ -42,7 +43,10 @@ function App() {
   <AuthProvider>
       <Routes>
 
-        <Route path='/' element={ <Navigate to='/login' /> } />
+        {/* <Route path='/' element={ <Navigate to='/login' /> } />
+         */}
+
+        <Route path='/' element={<Home />} />
         <Route path='/login' element={ <Render /> }/>
         <Route path='/register' element={<Register/>}/>
         
