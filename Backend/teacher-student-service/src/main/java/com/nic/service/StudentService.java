@@ -12,4 +12,6 @@ public interface StudentService {
 	public ResponseDto approveStudentEnrollment(int classroomId, int studentId);
 	public ResponseDto rejectStudentEnrollment(int classroomId, int studentId);
 	public ResponseDto getApprovedEnrollementsByClassroomId(int classroomId);
+	
+	public ResponseDto getJoinedClassroomDetailsByStudentId(String authHeader);
 }

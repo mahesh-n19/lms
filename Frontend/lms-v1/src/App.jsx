@@ -34,6 +34,7 @@ import ViewAssginment from './components/teacher/ViewAssignment'
 import EnrolledStudents from './components/teacher/EnrolledStudents'
 import PendingStudents from './components/teacher/PendingStudents'
 import Home from './components/landing/home'
+import StudentClassroom from './components/user/StudentClassroom'
 
 function App() {
  
@@ -42,9 +43,6 @@ function App() {
     <>
   <AuthProvider>
       <Routes>
-
-        {/* <Route path='/' element={ <Navigate to='/login' /> } />
-         */}
 
         <Route path='/' element={<Home />} />
         <Route path='/login' element={ <Render /> }/>
@@ -69,6 +67,7 @@ function App() {
                 <Route path='' element={<Dashboard />} />
                 <Route path='dashboard' element={<Dashboard />} />
                 <Route path='join-classroom' element={<JoinClassroom />} />
+                <Route path='classroom/:id' element={<StudentClassroom />} />
                 <Route path='*' element={<Dashboard />} />
 
             </Route>
