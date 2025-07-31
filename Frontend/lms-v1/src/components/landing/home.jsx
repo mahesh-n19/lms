@@ -19,6 +19,8 @@ export default function Home() {
                 <a className="header-links" href="#">Contact Us</a>
                 <Link to='/login' className="header-links" >Login</Link>
 
+                <Link to='/register' className="header-links" >Register</Link>
+
 
             </div>
 

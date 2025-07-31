@@ -100,6 +100,7 @@ export default function Content() {
             
           </button>
           <p>Don't have account? <Link to='/register'>Click to register</Link></p>
+          <p><Link to='/'>Go home</Link></p>
         </form>
 
       </div>

@@ -8,7 +8,7 @@
 .landing-content,.register-student
 {
     height: calc(100% - 100px);
-    border: 1px solid red;
+    /* border: 1px solid red; */
     
     display: flex;
     justify-content: center;

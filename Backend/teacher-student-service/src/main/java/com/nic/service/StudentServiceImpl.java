@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.nic.config.JwtUtils;
 import com.nic.dto.EnrollmentDto;
 import com.nic.dto.JoinClassroomDto;
+import com.nic.dto.JoinedClassroomDetailsDto;
 import com.nic.dto.PendingEnrollmentDto;
 import com.nic.entity.ClassroomDetails;
 import com.nic.entity.ResponseDto;
@@ -174,6 +175,28 @@ public class StudentServiceImpl implements StudentService{
 		response.setStatusCode(HttpStatus.OK.value());
 		
 		return response;
+	}
+
+	@Override
+	public ResponseDto getJoinedClassroomDetailsByStudentId(String authHeader) {
+		
+		String token = authHeader.replace("Bearer ","").trim();
+		Claims payload = jwtUtils.getPayloadFromJwt(token);
+		
+		
+		int userId = Integer.parseInt(payload.get("userid").toString());
+		
+		List<JoinedClassroomDetailsDto> joinedClassrooms = studentEnrollmentRepo.getJoinedClassroomDetailsByStudentId(userId);
+		
+		ResponseDto response = new ResponseDto();
+		
+		response.setData(joinedClassrooms);
+		response.setMessage("Joined classroom fetched successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		
+		return response;
+		
 	}
 
 	

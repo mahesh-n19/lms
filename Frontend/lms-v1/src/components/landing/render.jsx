@@ -9,11 +9,11 @@ export default function Render() {
   return (
     <div>
        
-            <Header />
+            {/* <Header /> */}
 
             <Content />
 
-            <Footer />
+            {/* <Footer /> */}
 
     </div>
   )

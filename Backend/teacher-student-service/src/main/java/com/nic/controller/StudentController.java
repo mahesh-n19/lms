@@ -66,4 +66,13 @@ public class StudentController {
 		return studentService.rejectStudentEnrollment(enrollment.getClassroomId(),enrollment.getStudentId());
 	}
 	
+	
+	@PreAuthorize("hasRole('USER')")
+	@GetMapping("/enrolled-classroom")
+	public ResponseDto getJoinedClassroomDetailsByStudentId( @RequestHeader("Authorization") String authHeader)
+	{
+		return studentService.getJoinedClassroomDetailsByStudentId(authHeader);
+	}
+	
+	
 }

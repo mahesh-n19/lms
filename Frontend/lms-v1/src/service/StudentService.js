@@ -29,6 +29,28 @@ export async function joinClassroomService(data)
     }
 }
 
+export async function getJoinedClassroomService()
+{
+    try
+    {
+        const token = sessionStorage.getItem('token');
+        const url = `${API_URL}/enrolled-classroom`;
+
+        const response = await axios.get(url,{
+                headers : {
+                'Authorization' : `Bearer ${token}`
+                }
+             })
+            
+             return response.data;
+    }
+    catch(e)
+    {
+        console.log(e);
+        return e.response.data;
+    }
+}
+
 
 export async function getPendingEnrollmentService()
 {

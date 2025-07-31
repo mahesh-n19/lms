@@ -24,7 +24,7 @@ export default function Register() {
   };
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <div className="register-student">
         <br />
         <div className="register-form">
@@ -108,10 +108,11 @@ export default function Register() {
               )}
             </button>
             <p>Already have an account? <Link to='/login'>Login</Link></p>
+            <p><Link to='/'>Go home</Link></p>
           </form>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
