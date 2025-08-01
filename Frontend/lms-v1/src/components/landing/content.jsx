@@ -5,6 +5,7 @@ import './landing.css';
 
 export default function Content() {
   return (
+    <>
     <div className="landing-content container-fluid text-center">
       {/* Hero Section */}
       <div className="hero-section">
@@ -16,10 +17,8 @@ export default function Content() {
         </div>
       </div>
 
-          </button>
-          <p>Don't have account? <Link to='/register'>Click to register</Link></p>
-          <p><Link to='/'>Go home</Link></p>
-        </form>
+          
+      
 
 
       {/* Features Section */}
@@ -60,5 +59,6 @@ export default function Content() {
         </blockquote>
       </div>
     </div>
+    </>
   );
 }
