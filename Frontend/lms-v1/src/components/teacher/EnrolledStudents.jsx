@@ -33,7 +33,7 @@ export default function EnrolledStudents() {
 
             <DataTable value={approvedEnrollments} stripedRows showGridlines size='small'
                                                 paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} 
-                                                emptyMessage="No Pending enrollments"  
+                                                emptyMessage="No enrollments"  
                                     >
                 <Column field="studentName" header="Student Name"  sortable ></Column>
                 <Column field="emailId" header="Email"  sortable ></Column>

@@ -65,7 +65,7 @@ public class AssignmentController {
 	}
 	
 	
-	@PreAuthorize("hasRole('TEACHER')")
+	@PreAuthorize("hasAnyRole('TEACHER', 'USER')")
 	@GetMapping("/assignment/{id}")
 	public AssignmentDto getAssignmentDetailsByAssignmentId(@PathVariable("id") int assignmentId)
 	{

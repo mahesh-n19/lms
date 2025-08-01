@@ -29,6 +29,32 @@ export async function getAssignmentsByClassroomIdService(id)
     }
 }
 
+export async function getStudentAssignmentsByClassroomIdService(id){
+    try
+    {
+        const token = sessionStorage.getItem('token');
+        const url= `${API_URL}/assignments/${id}`;
+
+
+        const response = await axios.get(url,  {
+              headers: {
+                'Authorization' : `Bearer ${token}`
+                },
+            });
+
+            console.log("API Response : ",response);
+            console.log("API DATA  : ",response.data);
+            return response.data;
+    }
+    catch(e)
+    {
+        console.log(e);
+        return e.response.data;
+    }
+
+
+}
+
 
 export async function createAssignmentService(data)
 {

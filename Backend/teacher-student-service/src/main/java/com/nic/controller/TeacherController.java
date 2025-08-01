@@ -68,7 +68,7 @@ public class TeacherController {
 
 	}
 	
-	@PreAuthorize("hasRole('TEACHER')")
+	@PreAuthorize("hasAnyRole('TEACHER', 'USER')")
 	@GetMapping("/classroom-details/{id}")
 	public ResponseDto getClassroomDetails(@PathVariable("id") int classroomId) {
 				

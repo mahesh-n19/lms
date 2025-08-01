@@ -8,12 +8,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.nic.config.JwtUtils;
+import com.nic.dto.AssignmentDto;
 import com.nic.dto.EnrollmentDto;
 import com.nic.dto.JoinClassroomDto;
+import com.nic.dto.JoinedClassroomDetailsDto;
 import com.nic.dto.PendingEnrollmentDto;
+import com.nic.entity.Assignment;
 import com.nic.entity.ClassroomDetails;
 import com.nic.entity.ResponseDto;
 import com.nic.entity.StudentEnrollment;
+import com.nic.repository.AssignmentRepo;
 import com.nic.repository.ClassroomDetailsRepo;
 import com.nic.repository.StudentEnrollmentRepo;
 
@@ -28,6 +32,9 @@ public class StudentServiceImpl implements StudentService{
 	
 	@Autowired
 	private ClassroomDetailsRepo classroomDetailsRepo;
+	
+	@Autowired
+	private AssignmentRepo assignmentRepo;
 	
 	@Autowired
 	JwtUtils jwtUtils;
@@ -170,6 +177,45 @@ public class StudentServiceImpl implements StudentService{
 		
 		ResponseDto response=new ResponseDto();
 		response.setMessage("Enrollment rejected successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		
+		return response;
+	}
+
+	@Override
+	public ResponseDto getJoinedClassroomDetailsByStudentId(String authHeader) {
+		
+		String token = authHeader.replace("Bearer ","").trim();
+		Claims payload = jwtUtils.getPayloadFromJwt(token);
+		
+		
+		int userId = Integer.parseInt(payload.get("userid").toString());
+		
+		List<JoinedClassroomDetailsDto> joinedClassrooms = studentEnrollmentRepo.getJoinedClassroomDetailsByStudentId(userId);
+		
+		ResponseDto response = new ResponseDto();
+		
+		response.setData(joinedClassrooms);
+		response.setMessage("Joined classroom fetched successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		
+		return response;
+		
+	}
+
+	@Transactional
+	@Override
+	public ResponseDto getAssignmentsByClassroomId(int classroomId) {
+		// TODO Auto-generated method stub
+		
+		List<Assignment> assignments = assignmentRepo.getAssignmentsByClassroomId(classroomId);
+ 		
+		ResponseDto response = new ResponseDto();
+		
+		response.setData(assignments);
+		response.setMessage("Assignments fetched successfully");
 		response.setStatus("success");
 		response.setStatusCode(HttpStatus.OK.value());
 		
