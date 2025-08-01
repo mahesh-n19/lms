@@ -15,7 +15,7 @@ export default function StudentAssignment() {
 
 
  useEffect(() => {
-    
+  //  console.log("UseEffect called"); 
     getAssignments();
   }, []);
 

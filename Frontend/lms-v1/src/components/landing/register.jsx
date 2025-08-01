@@ -1,6 +1,3 @@
-
-
-
 import React, { useState } from "react";
 import Header from "./header";
 import Footer from "./footer";
@@ -20,7 +17,6 @@ export default function Register() {
     if (result.statusCode !== 200) {
       setErrorMsg(result.message);
     } else {
-      setErrorMsg(result.message);
       navigate("/login");
     }
   };
@@ -31,16 +27,9 @@ export default function Register() {
       <div className="d-flex justify-content-center align-items-center register-wrapper">
         <div className="card shadow p-4 register-card">
           <h2 className="text-center mb-4">Student Registration</h2>
-          {errorMsg && (
-            <p className="text-danger text-center mb-3">{errorMsg}</p>
-          )}
-      {/* <Header /> */}
-      <div className="register-student">
-        <br />
-        <div className="register-form">
-          <h1 style={{ textAlign: "center" }}>Register Student</h1>
-          <p style={{textAlign:"center", color:"red"}}>{errorMsg}</p>
+          {errorMsg && <p className="text-danger text-center">{errorMsg}</p>}
           <form onSubmit={handleSubmit(formSubmit)}>
+
             <div className="mb-3">
               <label htmlFor="name" className="form-label fw-bold">
                 Name
@@ -80,17 +69,13 @@ export default function Register() {
               <input
                 type="password"
                 id="password"
-                className={`form-control ${
-                  errors.password ? "is-invalid" : ""
-                }`}
+                className={`form-control ${errors.password ? "is-invalid" : ""}`}
                 autoComplete="off"
                 {...register("password", {
                   required: "Password is required",
                 })}
               />
-              <div className="invalid-feedback">
-                {errors.password?.message}
-              </div>
+              <div className="invalid-feedback">{errors.password?.message}</div>
             </div>
 
             <button
@@ -111,20 +96,19 @@ export default function Register() {
               )}
             </button>
 
-
             <p className="mt-3 text-center">
               Already have an account?{" "}
               <Link to="/login" className="text-decoration-none">
                 Login
               </Link>
             </p>
-            <p>Already have an account? <Link to='/login'>Login</Link></p>
-            <p><Link to='/'>Go home</Link></p>
-
+            <p className="text-center">
+              <Link to="/">Go Home</Link>
+            </p>
           </form>
         </div>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </>
   );
 }

@@ -116,7 +116,7 @@ export default function PendingStudents() {
       )}
 
 
-        <div className='container mt-5'>
+        <div className='container mt-5 py-2'>
                         <DataTable value={pendingEnrollments} stripedRows showGridlines size='small'
                                     paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} 
                                     emptyMessage="No Pending enrollments"  
