@@ -5,12 +5,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class JoinClassroomDto {
+@NoArgsConstructor
+public class EnrollmentActionDto {
 
-	private String classroomCode;
-	
-	
+	private int classroomId;
+	private int studentId;
 	
 }

@@ -55,10 +55,7 @@ public class JwtUtils {
 		
 		String username = userDetails.getUsername();
 		
-		User user = userService.getUserDetailsByEmail(username);
-		
-		
-		
+		User user = userService.getUserDetailsByEmail(username);	
 		Map<String,Object> claims = new HashMap<>();
 		claims.put("name", user.getName() );
 		claims.put("role",user.getRole() );

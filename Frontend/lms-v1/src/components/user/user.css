@@ -1,6 +1,6 @@
 .user-header
 {
-    height: 100px;
+    height: 80px;
     border: 1px solid black;
     position: sticky;
     top: 0;
@@ -38,4 +38,18 @@
     border: 1px solid black;
     position: sticky;
     top:100px;
+}
+
+.jc-upper-div
+{
+        display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.join-classroom 
+{
+    display: flex;
+    gap: 10px;
 }

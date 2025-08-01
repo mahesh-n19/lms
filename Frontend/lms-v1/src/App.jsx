@@ -31,6 +31,9 @@ import CreateAssignment from './components/teacher/CreateAssignment'
 import Assignments from './components/teacher/Assignments'
 import Students from './components/teacher/Students'
 import ViewAssginment from './components/teacher/ViewAssignment'
+import EnrolledStudents from './components/teacher/EnrolledStudents'
+import PendingStudents from './components/teacher/PendingStudents'
+import LoginForm from './components/landing/LoginForm'
 
 function App() {
  
@@ -38,12 +41,17 @@ function App() {
   return (
     <>
   <AuthProvider>
-      <Routes>
-
+      {/* <Routes> */}
+{/* 
         <Route path='/' element={ <Navigate to='/login' /> } />
         <Route path='/login' element={ <Render /> }/>
         <Route path='/register' element={<Register/>}/>
-        
+         */}
+         <Routes>
+  <Route path='/' element={<Render />} /> {/* Landing page */}
+  <Route path='/login' element={<LoginForm />} /> {/* Login form */}
+  <Route path='/register' element={<Register />} />
+
             
             <Route path='/admin' element={<RouteGuard allowedRoles={['ROLE_ADMIN']}>
                   <AdminRender />
@@ -77,7 +85,10 @@ function App() {
                 <Route path='classroom/:id' element={<Classroom />} >
                     <Route path='' element={<Assignments />} />
                     <Route path='create-assignment'  element={<CreateAssignment />}/>
-                    <Route path='students' element={<Students />} />
+                    <Route path='students' element={<Students />} >
+                        <Route path='' element={<EnrolledStudents/>}/>
+                        <Route path='pending' element={<PendingStudents />}/>
+                    </Route>
                     <Route path='view-assignment/:assignmentid' element={<ViewAssginment />} />
                 </Route>
                 <Route path='*' element={<Dashboard />} />
