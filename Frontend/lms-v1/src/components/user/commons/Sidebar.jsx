@@ -13,7 +13,6 @@ export default function Sidebar() {
     const getJoinedClassroom = async ()=>{
 
         const result = await getJoinedClassroomService();
-        console.log("My Joined classroom : ", result.data);
 
         setJoinedClassroom(result.data);
 
