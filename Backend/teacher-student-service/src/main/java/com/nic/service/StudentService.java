@@ -14,4 +14,5 @@ public interface StudentService {
 	public ResponseDto getApprovedEnrollementsByClassroomId(int classroomId);
 	
 	public ResponseDto getJoinedClassroomDetailsByStudentId(String authHeader);
+	public ResponseDto getAssignmentsByClassroomId(int classroomId);
 }

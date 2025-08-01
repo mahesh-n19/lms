@@ -74,5 +74,14 @@ public class StudentController {
 		return studentService.getJoinedClassroomDetailsByStudentId(authHeader);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
+	@GetMapping("/assignments/{id}")
+	public ResponseDto getAssignmentsByClassroomId(@PathVariable("id") int classroomId) {
+		
+		return studentService.getAssignmentsByClassroomId(classroomId);
+	}
+	
+	
+	
 	
 }

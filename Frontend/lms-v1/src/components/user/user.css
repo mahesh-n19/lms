@@ -53,3 +53,23 @@
     display: flex;
     gap: 10px;
 }
+
+.nav-assignment 
+{
+    color : black;
+    text-decoration: none;
+}
+
+.main-container
+{
+        display: flex;
+    gap: 20px;
+}
+
+.file-data 
+{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+}
