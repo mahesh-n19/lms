@@ -14,7 +14,6 @@ import com.nic.entity.StudentEnrollment;
 @Repository
 public interface StudentEnrollmentRepo extends JpaRepository<StudentEnrollment, Long> {
 
-	
 	@Query(" FROM StudentEnrollment S where S.classroomId = ?1 and S.studentId = ?2 ")
 	public StudentEnrollment getEnrollmentDetailsByClassroomIdAndStudentId(int classroomId, int studentId);
 	

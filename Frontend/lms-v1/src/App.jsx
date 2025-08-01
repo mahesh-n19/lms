@@ -33,6 +33,8 @@ import Students from './components/teacher/Students'
 import ViewAssginment from './components/teacher/ViewAssignment'
 import EnrolledStudents from './components/teacher/EnrolledStudents'
 import PendingStudents from './components/teacher/PendingStudents'
+import LoginForm from './components/landing/LoginForm'
+
 import Home from './components/landing/home'
 import StudentClassroom from './components/user/StudentClassroom'
 import StudentAssignment from './components/user/StudentAssignment'
@@ -44,12 +46,12 @@ function App() {
   return (
     <>
   <AuthProvider>
-      <Routes>
 
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={ <Render /> }/>
-        <Route path='/register' element={<Register/>}/>
-        
+         <Routes>
+  <Route path='/' element={<Render />} /> {/* Landing page */}
+  <Route path='/login' element={<LoginForm />} /> {/* Login form */}
+  <Route path='/register' element={<Register />} />
+
             
             <Route path='/admin' element={<RouteGuard allowedRoles={['ROLE_ADMIN']}>
                   <AdminRender />
