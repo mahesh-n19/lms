@@ -35,6 +35,8 @@ import EnrolledStudents from './components/teacher/EnrolledStudents'
 import PendingStudents from './components/teacher/PendingStudents'
 import Home from './components/landing/home'
 import StudentClassroom from './components/user/StudentClassroom'
+import StudentAssignment from './components/user/StudentAssignment'
+import AddStudentAssignment from './components/user/AddStudentAssignment';
 
 function App() {
  
@@ -67,7 +69,12 @@ function App() {
                 <Route path='' element={<Dashboard />} />
                 <Route path='dashboard' element={<Dashboard />} />
                 <Route path='join-classroom' element={<JoinClassroom />} />
-                <Route path='classroom/:id' element={<StudentClassroom />} />
+                <Route path='classroom/:id' element={<StudentClassroom />} >
+
+                  <Route path='' element={<StudentAssignment />} />
+                  <Route path='add-assignment/:assignmentid' element={<AddStudentAssignment />} />
+
+                </Route>
                 <Route path='*' element={<Dashboard />} />
 
             </Route>
