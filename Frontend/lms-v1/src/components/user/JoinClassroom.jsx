@@ -20,10 +20,7 @@ export default function JoinClassroom() {
            rowData.status === 'R' ? 'Rejected' : rowData.status;
     };
 
-
-    useEffect(()=>{
-
-        const getPendingEnrollments = async ()=>{
+    const getPendingEnrollments = async ()=>{
       
             const result = await getPendingEnrollmentService();
       
@@ -32,6 +29,11 @@ export default function JoinClassroom() {
             setPendingEnrollments(result.data);
       
           }
+
+
+    useEffect(()=>{
+
+        
       
           getPendingEnrollments();
 
@@ -39,7 +41,7 @@ export default function JoinClassroom() {
 
     const formSubmit = async (data) => {
     
-      console.log("Form Data : " , data);
+      // console.log("Form Data : " , data);
 
       
       const result = await joinClassroomService(data);
@@ -56,6 +58,8 @@ export default function JoinClassroom() {
         setAlertMsg(result.message);
         setAlertColor(true);
       }
+
+      getPendingEnrollments();
     
     }
 

@@ -35,18 +35,18 @@ import EnrolledStudents from './components/teacher/EnrolledStudents'
 import PendingStudents from './components/teacher/PendingStudents'
 import LoginForm from './components/landing/LoginForm'
 
+import Home from './components/landing/home'
+import StudentClassroom from './components/user/StudentClassroom'
+import StudentAssignment from './components/user/StudentAssignment'
+import AddStudentAssignment from './components/user/AddStudentAssignment';
+
 function App() {
  
 
   return (
     <>
   <AuthProvider>
-      {/* <Routes> */}
-{/* 
-        <Route path='/' element={ <Navigate to='/login' /> } />
-        <Route path='/login' element={ <Render /> }/>
-        <Route path='/register' element={<Register/>}/>
-         */}
+
          <Routes>
   <Route path='/' element={<Render />} /> {/* Landing page */}
   <Route path='/login' element={<LoginForm />} /> {/* Login form */}
@@ -71,6 +71,12 @@ function App() {
                 <Route path='' element={<Dashboard />} />
                 <Route path='dashboard' element={<Dashboard />} />
                 <Route path='join-classroom' element={<JoinClassroom />} />
+                <Route path='classroom/:id' element={<StudentClassroom />} >
+
+                  <Route path='' element={<StudentAssignment />} />
+                  <Route path='add-assignment/:assignmentid' element={<AddStudentAssignment />} />
+
+                </Route>
                 <Route path='*' element={<Dashboard />} />
 
             </Route>

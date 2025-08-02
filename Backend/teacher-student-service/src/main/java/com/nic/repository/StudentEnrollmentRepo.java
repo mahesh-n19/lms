@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.nic.dto.EnrollmentDto;
+import com.nic.dto.JoinedClassroomDetailsDto;
 import com.nic.dto.PendingEnrollmentDto;
 import com.nic.entity.StudentEnrollment;
 
@@ -24,4 +25,7 @@ public interface StudentEnrollmentRepo extends JpaRepository<StudentEnrollment, 
 	
 	@Query("SELECT new com.nic.dto.EnrollmentDto(U.userId,U.name,U.email, E.status) from User U Inner Join StudentEnrollment E On E.studentId=U.userId where E.status='A' and E.classroomId=?1 ")
 	public List<EnrollmentDto> getApprovedEnrollmentsByClassroomId(int classroomId);
+	
+	@Query("SELECT new com.nic.dto.JoinedClassroomDetailsDto(C.classRoomId, C.title,C.classRoomCode ) FROM ClassroomDetails C Inner Join StudentEnrollment S On C.classRoomId = S.classroomId where S.studentId=?1 and S.status='A'")
+	public List<JoinedClassroomDetailsDto> getJoinedClassroomDetailsByStudentId(int studentId);
 }

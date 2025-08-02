@@ -3,6 +3,7 @@ package com.nic.service;
 import com.nic.config.User;
 import com.nic.dto.RegisterTeacherDto;
 import com.nic.dto.RegisterUserDto;
+
 import com.nic.entity.ResponseDto;
 
 public interface UserService {

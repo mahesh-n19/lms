@@ -10,7 +10,7 @@ export default function Header() {
     const handleLogout = ()=>{
       logout();
       sessionStorage.removeItem('token');
-      navigate('/login');
+      navigate('/');
     }
 
   return (

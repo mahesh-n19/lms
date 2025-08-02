@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.nic.config.User;
 import com.nic.dto.RegisterTeacherDto;
 
+
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>{
 	

@@ -7,7 +7,7 @@ export default function RouteGuard({allowedRoles,children}) {
     const {isAuthenticated,userRole} = useAuth();
 
     if (!isAuthenticated || !allowedRoles.includes(userRole)) {
-        return <Navigate to="/login" />;
+        return <Navigate to="/" />;
       }
 
     
