@@ -16,7 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import com.nic.entity.Assignment;
+import com.nic.entity.StudentAssignmentSubmission;
 import com.nic.repository.AssignmentRepo;
+import com.nic.repository.StudentAssignmentSubmissionRepo;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -25,6 +27,9 @@ public class DownloadAssignmentController {
 	
 	@Autowired
 	private AssignmentRepo assignmentRepo;
+	
+	@Autowired 
+	private StudentAssignmentSubmissionRepo submissionRepo;
 	
 	@GetMapping("/download-assignment/{id}")
 	public ResponseEntity<Resource> downloadTeacherAssignment(@PathVariable("id") int assignmentId)
@@ -49,6 +54,29 @@ public class DownloadAssignmentController {
 				 .contentType(MediaType.APPLICATION_PDF)
 				 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Assignment.pdf\"")
 				 .body(resource);
+	}
+	
+	
+	@GetMapping("/download-submitted-assignment/{id}")
+	public ResponseEntity<Resource> downloadStudentSubmittedAssignment(@PathVariable("id") int submissionId)
+	{
+		StudentAssignmentSubmission assignment = submissionRepo.getSubmissionDetailsById(submissionId);
+		
+		String filePath = assignment.getFilePath()+"\\" + assignment.getSubmissionId() + "\\" + assignment.getFileName();
+		Path path = Paths.get(filePath).normalize();
+		
+		Resource resource = null;
+		try {
+			resource = new UrlResource(path.toUri());
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		
+		return ResponseEntity.ok()
+				 .contentType(MediaType.parseMediaType("application/octet-stream"))
+				 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + assignment.getFileName() + "\"")
+				 .body(resource);
+		
 	}
 	
 }

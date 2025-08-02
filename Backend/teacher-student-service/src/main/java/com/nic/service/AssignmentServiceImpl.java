@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +18,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nic.dto.AssignmentDto;
+import com.nic.dto.SubmitAssignmentDto;
+import com.nic.dto.SubmittedAssignmentDto;
 import com.nic.entity.Assignment;
 import com.nic.entity.ResponseDto;
+import com.nic.entity.StudentAssignmentSubmission;
 import com.nic.repository.AssignmentRepo;
+import com.nic.repository.StudentAssignmentSubmissionRepo;
 
 import jakarta.transaction.Transactional;
 
@@ -30,6 +36,9 @@ public class AssignmentServiceImpl implements AssignmentService {
 	 
 	 @Autowired
 	 private AssignmentRepo assignmentRepo;
+	 
+	 @Autowired 
+	 private StudentAssignmentSubmissionRepo studentSubmissionRepo; 
 
 	@Transactional
 	@Override
@@ -110,5 +119,95 @@ public class AssignmentServiceImpl implements AssignmentService {
 	{
 		return assignmentRepo.getAssignmentByAssignmentId(assignmentId);
 	}
+
+	@Transactional
+	@Override
+	public ResponseDto submitStudentAssignment(SubmitAssignmentDto assignment, MultipartFile assignmentFile, int studentId) {
+		
+		
+		System.out.println("Assignment Data : "+assignment);
+		System.out.println("File name : "+assignment.getFilename());
+		System.out.println("File Size : "+assignmentFile.getSize());
+		
+		String filePath = "D:\\Drive(F)\\Sunbeam LMS\\lms\\lms_data\\"+assignment.getClassroomId()+"\\"+assignment.getAssignmentId();
+		
+		StudentAssignmentSubmission submissionEntity = new StudentAssignmentSubmission();
+
+		submissionEntity.setAssignmentId(assignment.getAssignmentId());
+		submissionEntity.setStudentId(studentId);
+		submissionEntity.setMarks(0);
+		submissionEntity.setStatus("D");
+		submissionEntity.setSubmissionDate(LocalDate.now().toString());
+		submissionEntity.setFilePath(filePath);
+		submissionEntity.setFileName(assignment.getFilename());
+		if(assignmentFile.getContentType() == "aaplication/pdf")
+		{
+			submissionEntity.setFileType("pdf");
+		}
+		else 
+		{
+			submissionEntity.setFileType("zip");
+		}
+		
+		StudentAssignmentSubmission submitted = studentSubmissionRepo.save(submissionEntity);
+		
+		ResponseDto response = new ResponseDto();
+		try
+		{
+			
+			File directory=new File(filePath + "\\" + submitted.getSubmissionId());
+			
+			if(!directory.exists()) {
+				boolean created=directory.mkdirs();
+				System.out.println("directory created");
+				
+			}
+			
+			Path assignmentFilePath = Paths.get(filePath + "\\" + submitted.getSubmissionId() + "\\" + assignment.getFilename());
+			 
+			 
+			 assignmentFile.transferTo(assignmentFilePath.toFile());
+			
+			response.setMessage("Assignment submitted successfully");
+			response.setStatus("success");
+			response.setStatusCode(HttpStatus.OK.value());
+
+		}
+		catch(IOException e)
+		{
+			response.setMessage("Failed to submit assignment");
+			 response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			 return response;
+		}
+		
+		
+		return response;
+	}
+
+	@Override
+	public ResponseDto getSubmittedAssignmentStatus(int assignmentId, int studentId) {
+		
+		ResponseDto response = new ResponseDto();
+		
+		SubmittedAssignmentDto submissionStatus = studentSubmissionRepo.getSubmittedAssignmentStatus(assignmentId, studentId);
+		
+		if(submissionStatus == null)
+		{
+			response.setMessage("No submission found");
+			response.setStatus("danger");
+			response.setStatusCode(HttpStatus.NOT_FOUND.value());
+		}
+		else 
+		{
+			response.setMessage("Submission found");
+			response.setStatus("success");
+			response.setStatusCode(HttpStatus.OK.value());
+			response.setData(submissionStatus);
+		}
+		
+		return response;
+	}
 	
 }
+
+
