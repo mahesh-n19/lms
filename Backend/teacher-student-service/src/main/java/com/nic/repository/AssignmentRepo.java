@@ -19,4 +19,6 @@ public interface AssignmentRepo extends JpaRepository<Assignment, Long>{
 	@Query("From Assignment a where a.assignmentId=?1")
 	public Assignment getByAssignmentId(long assignmentId);
 	
+	
+	
 }
