@@ -127,3 +127,8 @@
     align-items: center;
 }
 
+.view-assignment-container 
+{
+    display: flex;
+    gap: 15px;
+}

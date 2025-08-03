@@ -113,7 +113,7 @@ public class AssignmentController {
 		return assignmentService.getAssignmentDetailsByAssignmentId(assignmentId);
 	}
 	
-	@PreAuthorize("hasRole('Teacher')")
+	@PreAuthorize("hasRole('TEACHER')")
 	@GetMapping("/download-assignment/{id}")
 	public ResponseEntity<Resource> downloadAssignment(@PathVariable("id") int assignmentId)
 	{
@@ -139,5 +139,22 @@ public class AssignmentController {
 		
 		return null;
 	}
+	
+	@PreAuthorize("hasRole('TEACHER')")
+	@GetMapping("/submitted-assignments/{id}")
+	public ResponseDto getSubmittedAssignmentDetailsByAssignmentId(@PathVariable("id") long assignmentId)
+	{
+		
+		return assignmentService.getSubmittedAssignmentDetailsByAssignmentId(assignmentId);
+	}
+	
+	@PreAuthorize("hasRole('TEACHER')")
+	@GetMapping("/not-submitted-student/{id}/{assignId}")
+	public ResponseDto getStudentDetailsNotSubmittedAssignmentByAssignmentId(@PathVariable("id") long classroomId, @PathVariable("assignId") long assignmentId)
+	{
+		
+		return assignmentService.getStudentDetailsNotSubmittedAssignmentByAssignmentId(classroomId,assignmentId);
+	}
+	
 	
 }

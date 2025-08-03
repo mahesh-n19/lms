@@ -40,10 +40,10 @@ export default function StudentClassroom() {
           <h4>{classroomDetails?.description}</h4>
         </div>
 
+         <div className="classroom-actions">
+            <button className='btn btn-success'> <NavLink className="classroom-actions" to={`/user/classroom/${id}`} >Home</NavLink> </button>
+         </div>
 
-        <div>
-          {/* <NavLink to={`/user/classroom/${id}/add-assignment/${classroomDetails.assignmentid}`} className='btn btn-primary' >Add Assignment</NavLink> */}
-        </div>
       </div>
 
       <Outlet />
