@@ -18,8 +18,8 @@ export async function getAssignmentsByClassroomIdService(id)
                 },
             });
 
-            console.log("API Response : ",response);
-            console.log("API DATA  : ",response.data);
+            // console.log("API Response : ",response);
+            // console.log("API DATA  : ",response.data);
             return response.data;
     }
     catch(e)
@@ -42,8 +42,8 @@ export async function getStudentAssignmentsByClassroomIdService(id){
                 },
             });
 
-            console.log("API Response : ",response);
-            console.log("API DATA  : ",response.data);
+            // console.log("API Response : ",response);
+            // console.log("API DATA  : ",response.data);
             return response.data;
     }
     catch(e)
@@ -136,7 +136,7 @@ export async function getSubmittedAssignmentStatusService(id)
 export async function getAssignmentDetailsByAssignmentIdService(id)
 {
 
-    console.log("API Hittt ");
+    // console.log("API Hittt ");
     try
     {
         const token = sessionStorage.getItem('token');
@@ -150,7 +150,7 @@ export async function getAssignmentDetailsByAssignmentIdService(id)
             });
 
             // console.log("API Response : ",response);
-            console.log("API DATA  : ",response.data);
+            // console.log("API DATA  : ",response.data);
             return response.data;
     }
     catch(e)
@@ -160,4 +160,57 @@ export async function getAssignmentDetailsByAssignmentIdService(id)
     }
 }
 
+
+export async function getSubmittedAssignmentStudentDetailsService(id)
+{
+
+
+    try
+    {
+        const token = sessionStorage.getItem('token');
+        const url= `${API_URL}/submitted-assignments/${id}`;
+
+
+        const response = await axios.get(url,  {
+              headers: {
+                'Authorization' : `Bearer ${token}`
+                },
+            });
+
+           
+            return response.data;
+    }
+    catch(e)
+    {
+        console.log(e);
+        return e.response.data;
+    }
+}
+
+
+export async function getStudentDetailsNotSubmittedAssignmentByAssignmentIdService(id,assignmentId)
+{
+
+
+    try
+    {
+        const token = sessionStorage.getItem('token');
+        const url= `${API_URL}/not-submitted-student/${id}/${assignmentId}`;
+
+
+        const response = await axios.get(url,  {
+              headers: {
+                'Authorization' : `Bearer ${token}`
+                },
+            });
+
+           
+            return response.data;
+    }
+    catch(e)
+    {
+        console.log(e);
+        return e.response.data;
+    }
+}
 

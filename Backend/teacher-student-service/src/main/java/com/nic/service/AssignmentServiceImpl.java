@@ -18,8 +18,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nic.dto.AssignmentDto;
+import com.nic.dto.NotSubmittedAssignmentStudentDetailsDto;
 import com.nic.dto.SubmitAssignmentDto;
 import com.nic.dto.SubmittedAssignmentDto;
+import com.nic.dto.SubmittedAssignmentStudentDetailsDto;
 import com.nic.entity.Assignment;
 import com.nic.entity.ResponseDto;
 import com.nic.entity.StudentAssignmentSubmission;
@@ -140,7 +142,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 		submissionEntity.setSubmissionDate(LocalDate.now().toString());
 		submissionEntity.setFilePath(filePath);
 		submissionEntity.setFileName(assignment.getFilename());
-		if(assignmentFile.getContentType() == "aaplication/pdf")
+		if(assignmentFile.getContentType().equals("aaplication/pdf"))
 		{
 			submissionEntity.setFileType("pdf");
 		}
@@ -204,6 +206,37 @@ public class AssignmentServiceImpl implements AssignmentService {
 			response.setStatusCode(HttpStatus.OK.value());
 			response.setData(submissionStatus);
 		}
+		
+		return response;
+	}
+
+	@Override
+	public ResponseDto getSubmittedAssignmentDetailsByAssignmentId(long assignmentId) {
+		
+		ResponseDto response = new ResponseDto();
+		
+		List<SubmittedAssignmentStudentDetailsDto> submittedStudents = studentSubmissionRepo.getSubmittedAssignmentDetailsByAssignmentId(assignmentId);
+		
+		response.setData(submittedStudents);
+		response.setMessage("Assignments submitted by students fetched successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		
+		return response;
+	}
+
+	@Override
+	public ResponseDto getStudentDetailsNotSubmittedAssignmentByAssignmentId(long classroomId, long assignmentId) {
+		
+		
+		ResponseDto response = new ResponseDto();
+		
+		List<NotSubmittedAssignmentStudentDetailsDto> notSubmittedStudents = studentSubmissionRepo.getDetailsOfStudentsNotSubmittedAssignmentByAssignmentId( classroomId ,assignmentId);
+		
+		response.setData(notSubmittedStudents);
+		response.setMessage("Student not submitted assignments fetched successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
 		
 		return response;
 	}

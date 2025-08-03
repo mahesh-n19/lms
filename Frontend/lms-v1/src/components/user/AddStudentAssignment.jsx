@@ -105,13 +105,7 @@ export default function AddStudentAssignment() {
   return (
     <div>
       <div className="container mt-2">
-        <h3>
-          Add Assignment
-          {/* 
-            Classroom ID : {id}
-
-            Assignment ID : {assignmentid} */}
-        </h3>
+       
 
 
         {alert && (
@@ -187,7 +181,7 @@ export default function AddStudentAssignment() {
               statusDialog && (
 
                 <div className="container">
-                    <p>Submission ID : {statusDto.submissionId}</p>
+                    
                     <p><b>Status :</b> { statusDto.status == "D" ? (<span style={{color:"#ff9800"}}><b>Pending</b></span>) 
                                                           : (<span style={{color:"green"}}><b>Approved</b></span>)}
                     </p>

@@ -19,4 +19,7 @@ public interface AssignmentService {
   
   public ResponseDto submitStudentAssignment(SubmitAssignmentDto assignment ,MultipartFile assignmentFile, int studentId);
   public ResponseDto getSubmittedAssignmentStatus(int assignmentId, int studentId);
+  
+  public ResponseDto getSubmittedAssignmentDetailsByAssignmentId(long assignmentId);
+  public ResponseDto getStudentDetailsNotSubmittedAssignmentByAssignmentId(long classroomId, long assignmentId);
 }
