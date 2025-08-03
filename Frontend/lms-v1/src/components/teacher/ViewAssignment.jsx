@@ -47,6 +47,7 @@ export default function ViewAssignment() {
             <div  style={{display:"flex", gap:"15px"}}>
               <NavLink className='btn btn-primary' to={`/teacher/classroom/${id}/view-assignment/${assignmentid}`}>Submitted</NavLink>
               <NavLink className='btn btn-danger' to={`/teacher/classroom/${id}/view-assignment/${assignmentid}/not-submitted`}>Not Submitted</NavLink>
+              <NavLink className='btn btn-warning' to={`/teacher/classroom/${id}/view-assignment/${assignmentid}/graded`}>Graded</NavLink>
             </div>
               <Outlet />
 

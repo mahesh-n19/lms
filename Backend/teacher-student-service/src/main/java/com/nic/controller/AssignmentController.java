@@ -156,5 +156,13 @@ public class AssignmentController {
 		return assignmentService.getStudentDetailsNotSubmittedAssignmentByAssignmentId(classroomId,assignmentId);
 	}
 	
+	@PreAuthorize("hasRole('TEACHER')")
+	@GetMapping("/graded-student/{id}")
+	public ResponseDto getStudentDetailsWhoseAssignmentIsGradedByAssignmentId(@PathVariable("id")  long assignmentId)
+	{
+
+			return assignmentService.getStudentDetailsWhoseAssignmentAreGradedByAssignmentId(assignmentId);
+	}
+	
 	
 }
