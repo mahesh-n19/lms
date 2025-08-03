@@ -22,4 +22,5 @@ public interface AssignmentService {
   
   public ResponseDto getSubmittedAssignmentDetailsByAssignmentId(long assignmentId);
   public ResponseDto getStudentDetailsNotSubmittedAssignmentByAssignmentId(long classroomId, long assignmentId);
+  public ResponseDto getStudentDetailsWhoseAssignmentAreGradedByAssignmentId(long assignmentId);
 }

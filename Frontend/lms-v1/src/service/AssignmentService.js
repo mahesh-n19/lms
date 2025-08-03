@@ -214,3 +214,28 @@ export async function getStudentDetailsNotSubmittedAssignmentByAssignmentIdServi
     }
 }
 
+export async function getStudentDetailsWhoseAssignmentIsGradedByAssignmentIdService(id)
+{
+
+
+    try
+    {
+        const token = sessionStorage.getItem('token');
+        const url= `${API_URL}/graded-student/${id}`;
+
+
+        const response = await axios.get(url,  {
+              headers: {
+                'Authorization' : `Bearer ${token}`
+                },
+            });
+
+           
+            return response.data;
+    }
+    catch(e)
+    {
+        console.log(e);
+        return e.response.data;
+    }
+}

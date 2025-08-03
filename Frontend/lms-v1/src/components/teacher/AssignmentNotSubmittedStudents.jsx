@@ -37,7 +37,7 @@ export default function AssignmentNotSubmittedStudents() {
                   paginator
                   rows={5}
                   rowsPerPageOptions={[5, 10, 25, 50]}
-                  emptyMessage='No teachers registered yet'
+                  emptyMessage='No rcords yet'
                   className='p-datatable-sm'>
       
                   <Column field="name" header="Name" sortable></Column>

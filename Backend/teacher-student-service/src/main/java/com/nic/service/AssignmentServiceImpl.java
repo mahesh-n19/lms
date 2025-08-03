@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nic.dto.AssignmentDto;
+import com.nic.dto.GradedAssignmentDto;
 import com.nic.dto.NotSubmittedAssignmentStudentDetailsDto;
 import com.nic.dto.SubmitAssignmentDto;
 import com.nic.dto.SubmittedAssignmentDto;
@@ -235,6 +236,21 @@ public class AssignmentServiceImpl implements AssignmentService {
 		
 		response.setData(notSubmittedStudents);
 		response.setMessage("Student not submitted assignments fetched successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		
+		return response;
+	}
+
+	@Override
+	public ResponseDto getStudentDetailsWhoseAssignmentAreGradedByAssignmentId(long assignmentId) {
+		ResponseDto response = new ResponseDto();
+	
+		
+		List<GradedAssignmentDto> gradedStudents = studentSubmissionRepo.getDetailsOfStudentsWhoseAssignmentsAreGradedByAssignmentId( assignmentId);
+		
+		response.setData(gradedStudents);
+		response.setMessage("Student graded fetched successfully");
 		response.setStatus("success");
 		response.setStatusCode(HttpStatus.OK.value());
 		
