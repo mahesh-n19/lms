@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getSubmittedAssignmentStudentDetailsService } from '../../service/AssignmentService';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 
@@ -8,9 +8,12 @@ export default function AssignmentSubmittedStudents() {
 
     const {id,assignmentid} = useParams();
      const [submittedAssignment, setSubmittedAssignment] = useState([]);
+     const navigate = useNavigate();
 
      const handleAccept = (data)=>{
             console.log(data);
+
+            navigate(`/teacher/classroom/${id}/evaluate/${data.submissionId}`)
      }
     
     const actionBodyTemplate = (rowData) => {

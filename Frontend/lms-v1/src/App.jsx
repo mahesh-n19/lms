@@ -42,6 +42,7 @@ import AddStudentAssignment from './components/user/AddStudentAssignment';
 import AssignmentSubmittedStudents from './components/teacher/AssignmentSubmittedStudents'
 import AssignmentNotSubmittedStudents from './components/teacher/AssignmentNotSubmittedStudents'
 import AssignmentGradedStudentDetails from './components/teacher/AssignmentGradedStudentDetails'
+import EvaluateStudentAssignment from './components/teacher/EvaluateStudentAssignment'
 
 function App() {
  
@@ -102,7 +103,9 @@ function App() {
                         <Route path=''  element={<AssignmentSubmittedStudents />} />
                         <Route path='not-submitted' element={<AssignmentNotSubmittedStudents />} />
                         <Route path='graded' element={<AssignmentGradedStudentDetails />}  />
+                        
                     </Route>
+                    <Route path='evaluate/:submissionid' element={<EvaluateStudentAssignment />} />
                 </Route>
                 <Route path='*' element={<Dashboard />} />
 

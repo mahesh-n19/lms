@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nic.dto.AssignmentDto;
+import com.nic.dto.EvaluateAssignmentDetailsDto;
+import com.nic.dto.EvaluateDto;
 import com.nic.dto.GradedAssignmentDto;
 import com.nic.dto.NotSubmittedAssignmentStudentDetailsDto;
 import com.nic.dto.SubmitAssignmentDto;
@@ -254,6 +257,55 @@ public class AssignmentServiceImpl implements AssignmentService {
 		response.setStatus("success");
 		response.setStatusCode(HttpStatus.OK.value());
 		
+		return response;
+	}
+
+	@Override
+	public ResponseDto getSubmissionDetailsBySubmissionId(long submissionId) {
+		
+		ResponseDto response = new ResponseDto();
+		
+		
+		EvaluateAssignmentDetailsDto submissionDetials = studentSubmissionRepo.getSubmissionDetailsForEvaluationBySubmissionId(submissionId);
+		
+		response.setData(submissionDetials);
+		response.setMessage("Submission details fetched successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		 
+		return response;
+	}
+
+	@Transactional
+	@Override
+	public ResponseDto evaluateSubmissionBuSubmissionId(long submissionId, EvaluateDto evaluate) {
+		
+		System.out.println("Service Hit : ");
+		
+		ResponseDto response = new ResponseDto();
+		
+		StudentAssignmentSubmission submissionDetails = studentSubmissionRepo.getSubmissionDetailsBySubmissionId(submissionId);
+		
+		long assignmentId = submissionDetails.getAssignmentId();
+		
+		 Assignment assignment = assignmentRepo.getByAssignmentId(assignmentId);
+		 
+		 if(evaluate.getMarks() > assignment.getMaxMarks())
+		 {
+			 response.setMessage("Invalid marks entered");
+		 }
+		 else 
+		 {
+			 submissionDetails.setMarks(evaluate.getMarks());
+			 submissionDetails.setStatus("A");
+			 response.setMessage("Submission evaluated successfully");
+		
+		 }
+		 
+		 response.setStatus("success");
+		 response.setStatusCode(HttpStatus.OK.value());
+		 
+		 
 		return response;
 	}
 	
