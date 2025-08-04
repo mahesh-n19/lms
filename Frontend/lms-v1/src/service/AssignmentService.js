@@ -239,3 +239,58 @@ export async function getStudentDetailsWhoseAssignmentIsGradedByAssignmentIdServ
         return e.response.data;
     }
 }
+
+
+
+export async function getSubmissionDetailsBySubmissionIdService(id)
+{
+
+
+    try
+    {
+        const token = sessionStorage.getItem('token');
+        const url= `${API_URL}/submission-details/${id}`;
+
+
+        const response = await axios.get(url,  {
+              headers: {
+                'Authorization' : `Bearer ${token}`
+                },
+            });
+
+           
+            return response.data;
+    }
+    catch(e)
+    {
+        console.log(e);
+        return e.response.data;
+    }
+}
+
+export async function evaluateSubmissionBySubmissionId(id,marks)
+{
+    try{
+
+            const token = sessionStorage.getItem('token');
+            const url= `${API_URL}/evaluate/${id}`;
+
+            const data = {
+                'marks' : marks
+            }
+
+            const response = await axios.post(url,data, {
+                headers : {
+                    'Authorization' : `Bearer ${token}`
+                },
+            })
+
+            return response.data;
+
+    }
+    catch(e)
+    {
+        console.log(e);
+        return e.response.data;
+    }
+}

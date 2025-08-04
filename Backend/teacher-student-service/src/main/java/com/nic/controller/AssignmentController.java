@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nic.config.JwtUtils;
 import com.nic.dto.AssignmentDto;
+import com.nic.dto.EvaluateDto;
 import com.nic.dto.GetAssignmentDto;
 import com.nic.dto.SubmitAssignmentDto;
 import com.nic.entity.Assignment;
@@ -163,6 +164,28 @@ public class AssignmentController {
 
 			return assignmentService.getStudentDetailsWhoseAssignmentAreGradedByAssignmentId(assignmentId);
 	}
+	
+	@PreAuthorize("hasRole('TEACHER')")
+	@GetMapping("/submission-details/{id}")
+	public ResponseDto getSubmissionDetailsBySubmissionId(@PathVariable("id")  long submissionId)
+	{
+
+			return assignmentService.getSubmissionDetailsBySubmissionId(submissionId);
+	}	
+	
+	@PreAuthorize("hasRole('TEACHER')")
+	@PostMapping("/evaluate/{id}")
+	public ResponseDto evaluateSubmission(@PathVariable("id")  long submissionId, @RequestBody EvaluateDto evaluate )
+	{
+//		, 
+//		System.out.println("Api Hitt");
+//		
+//		System.out.println("Marks : "+marks);
+//		System.out.println("ID : "+submissionId);
+//		return null;
+			return assignmentService.evaluateSubmissionBuSubmissionId(submissionId, evaluate);
+	}	
+	
 	
 	
 }

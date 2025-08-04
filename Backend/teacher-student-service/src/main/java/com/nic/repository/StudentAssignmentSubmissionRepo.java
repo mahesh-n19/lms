@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import com.nic.dto.EvaluateAssignmentDetailsDto;
 import com.nic.dto.GradedAssignmentDto;
 import com.nic.dto.NotSubmittedAssignmentStudentDetailsDto;
 import com.nic.dto.SubmittedAssignmentDto;
@@ -38,5 +39,14 @@ public interface StudentAssignmentSubmissionRepo extends JpaRepository<StudentAs
 	public List<GradedAssignmentDto> getDetailsOfStudentsWhoseAssignmentsAreGradedByAssignmentId(long assignmentId);
 
 	
+	@Query("select new com.nic.dto.EvaluateAssignmentDetailsDto(SAS.submissionId,U.userId, U.name, A.maxMarks, SAS.fileName, SAS.fileType,SAS.submissionDate) FROM User U"
+		+ " INNER JOIN StudentAssignmentSubmission SAS on SAS.studentId = U.userId "
+		+ " INNER JOIN Assignment A on SAS.assignmentId = A.assignmentId"
+		+ " WHERE SAS.submissionId=?1")
+	public EvaluateAssignmentDetailsDto getSubmissionDetailsForEvaluationBySubmissionId(long submissionId);
+	
+	
+	@Query("FROM StudentAssignmentSubmission SAS where SAS.submissionId=?1")
+	public StudentAssignmentSubmission getSubmissionDetailsBySubmissionId(long submissionId);
 	
 }
