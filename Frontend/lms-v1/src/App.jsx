@@ -39,6 +39,9 @@ import Home from './components/landing/home'
 import StudentClassroom from './components/user/StudentClassroom'
 import StudentAssignment from './components/user/StudentAssignment'
 import AddStudentAssignment from './components/user/AddStudentAssignment';
+import AssignmentSubmittedStudents from './components/teacher/AssignmentSubmittedStudents'
+import AssignmentNotSubmittedStudents from './components/teacher/AssignmentNotSubmittedStudents'
+import AssignmentGradedStudentDetails from './components/teacher/AssignmentGradedStudentDetails'
 
 function App() {
  
@@ -95,7 +98,11 @@ function App() {
                         <Route path='' element={<EnrolledStudents/>}/>
                         <Route path='pending' element={<PendingStudents />}/>
                     </Route>
-                    <Route path='view-assignment/:assignmentid' element={<ViewAssginment />} />
+                    <Route path='view-assignment/:assignmentid' element={<ViewAssginment />} >
+                        <Route path=''  element={<AssignmentSubmittedStudents />} />
+                        <Route path='not-submitted' element={<AssignmentNotSubmittedStudents />} />
+                        <Route path='graded' element={<AssignmentGradedStudentDetails />}  />
+                    </Route>
                 </Route>
                 <Route path='*' element={<Dashboard />} />
 

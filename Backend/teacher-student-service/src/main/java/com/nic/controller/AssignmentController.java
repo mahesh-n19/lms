@@ -18,18 +18,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nic.config.JwtUtils;
 import com.nic.dto.AssignmentDto;
 import com.nic.dto.GetAssignmentDto;
+import com.nic.dto.SubmitAssignmentDto;
 import com.nic.entity.Assignment;
 import com.nic.entity.ResponseDto;
 import com.nic.repository.AssignmentRepo;
 import com.nic.service.AssignmentService;
+
+import io.jsonwebtoken.Claims;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -42,7 +47,8 @@ public class AssignmentController {
 	@Autowired
 	private AssignmentRepo assignmentRepo;
 	
-	 
+	@Autowired
+	private JwtUtils jwtUtils;
 	
 	
 	@PreAuthorize("hasRole('TEACHER')")
@@ -58,6 +64,41 @@ public class AssignmentController {
 			
 	}	
 	
+	
+	@PreAuthorize("hasRole('USER')")
+	@PostMapping(value = "/submit-assignment", consumes = {"multipart/form-data"})
+	public ResponseDto submitAssignment(
+			@RequestPart("assignmentDto") SubmitAssignmentDto assignmentDto,
+			@RequestParam("assignment") MultipartFile assignment,
+			@RequestHeader("Authorization") String authHeader
+			)
+	{
+		String token = authHeader.replace("Bearer ","").trim();
+		Claims payload = jwtUtils.getPayloadFromJwt(token);
+		
+		
+		int userId = Integer.parseInt(payload.get("userid").toString());
+		
+		System.out.println("/submit-assignment API Hitt");
+		return assignmentService.submitStudentAssignment(assignmentDto, assignment,userId);
+	}
+	
+	
+	@PreAuthorize("hasRole('USER')")
+	@GetMapping(value = "/submitted-assignment-status/{id}")
+	public ResponseDto getSubmittedAssignmentStatus(@PathVariable("id") int assignmentId, @RequestHeader("Authorization") String authHeader)
+	{
+		String token = authHeader.replace("Bearer ","").trim();
+		Claims payload = jwtUtils.getPayloadFromJwt(token);
+		
+		
+		int userId = Integer.parseInt(payload.get("userid").toString());
+		
+		return assignmentService.getSubmittedAssignmentStatus(assignmentId, userId);
+		
+		
+	}
+	
 	@PreAuthorize("hasRole('TEACHER')")
 	@GetMapping("/classroom-assignment/{id}")
 	public List<Assignment> getAssignments(@PathVariable("id") int classroomId) {
@@ -72,7 +113,7 @@ public class AssignmentController {
 		return assignmentService.getAssignmentDetailsByAssignmentId(assignmentId);
 	}
 	
-	@PreAuthorize("hasRole('Teacher')")
+	@PreAuthorize("hasRole('TEACHER')")
 	@GetMapping("/download-assignment/{id}")
 	public ResponseEntity<Resource> downloadAssignment(@PathVariable("id") int assignmentId)
 	{
@@ -98,5 +139,30 @@ public class AssignmentController {
 		
 		return null;
 	}
+	
+	@PreAuthorize("hasRole('TEACHER')")
+	@GetMapping("/submitted-assignments/{id}")
+	public ResponseDto getSubmittedAssignmentDetailsByAssignmentId(@PathVariable("id") long assignmentId)
+	{
+		
+		return assignmentService.getSubmittedAssignmentDetailsByAssignmentId(assignmentId);
+	}
+	
+	@PreAuthorize("hasRole('TEACHER')")
+	@GetMapping("/not-submitted-student/{id}/{assignId}")
+	public ResponseDto getStudentDetailsNotSubmittedAssignmentByAssignmentId(@PathVariable("id") long classroomId, @PathVariable("assignId") long assignmentId)
+	{
+		
+		return assignmentService.getStudentDetailsNotSubmittedAssignmentByAssignmentId(classroomId,assignmentId);
+	}
+	
+	@PreAuthorize("hasRole('TEACHER')")
+	@GetMapping("/graded-student/{id}")
+	public ResponseDto getStudentDetailsWhoseAssignmentIsGradedByAssignmentId(@PathVariable("id")  long assignmentId)
+	{
+
+			return assignmentService.getStudentDetailsWhoseAssignmentAreGradedByAssignmentId(assignmentId);
+	}
+	
 	
 }
