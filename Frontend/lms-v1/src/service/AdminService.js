@@ -1,23 +1,32 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8090/api/v1';
+const BASE_URL = 'http://localhost:8091/api/v1';
 
-export const getAllTeacherService = async () =>{
-    const response = await axios.get(`${BASE_URL}/teachers`);
-    return response.data;
+export const getAllCountsService = async () =>{
+    // const response = await axios.get(`${BASE_URL}/get-count`);
+    // return response.data;
+
+    try
+    {
+        const token = sessionStorage.getItem('token');
+        const url= `${BASE_URL}/get-count`;
+
+
+        const response = await axios.get(url,  {
+              headers: {
+                'Authorization' : `Bearer ${token}`
+                },
+            });
+
+            // console.log("API Response : ",response);
+            // console.log("API DATA  : ",response.data);
+            return response.data;
+    }
+    catch(e)
+    {
+        console.log(e);
+        return e.response;
+    }
+
 };
 
-export const getAllStudentsService = async ()=>{
-    const response = await axios.get(`${BASE_URL}/students`);
-    return response.data;
-}
-
-export const getAllClassroomsService = async () => {
-  const response = await axios.get(`${BASE_URL}/classrooms`);
-  return response.data;
-};
-
-export const getAllAssignmentsService = async () => {
-  const response = await axios.get(`${BASE_URL}/assignments`);
-  return response.data;
-};

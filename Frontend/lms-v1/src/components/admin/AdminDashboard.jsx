@@ -1,58 +1,43 @@
-import React, { useEffect, useState } from 'react';
-import './AdminDashboard.css';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import "./AdminDashboard.css";
+import { Link } from "react-router-dom";
+import { getAllCountsService } from "../../service/AdminService";
 import {
-  getAllTeacherService, 
-  getAllStudentsService,
-  getAllClassroomsService,
-  getAllAssignmentsService
-} from '../../service/AdminService'; 
-import {
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid
-} from 'recharts';
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
 
 export default function AdminDashboard() {
-  const [teacherCount, setTeacherCount] = useState(0);
-  const [studentCount,setStudentCount] =useState(0);
-  const [classroomCount,setClassroomCount] =useState(0);
-  const [assignmentCount, setAssignmentCount] = useState(0);
 
+  const [counts, setCounts] = useState({});
+  const teacherRegistrationData = [
+  { month: 'Jan', teachers: 4 },
+  { month: 'Feb', teachers: 6 },
+  { month: 'Mar', teachers: 5 },
+  { month: 'Apr', teachers: 8 },
+  { month: 'May', teachers: 3 },
+  { month: 'Jun', teachers: 7 },
+  { month: 'Jul', teachers: 2 },
+  { month: 'Aug', teachers: 5 },
+];
+
+  const getAllCount = async () => {
+    const result = await getAllCountsService();
+
+    console.log("result : ", result.data);
+
+    setCounts(result?.data);
+    //  console.log("counts : ",counts)
+  };
 
   useEffect(() => {
-    const fetchData = async () =>{
-      try{
-        const [teachers,students,classrooms,assignments]=await Promise.all([
-           getAllTeacherService(),
-           getAllStudentsService(),
-           getAllClassroomsService(),
-           getAllAssignmentsService()
-        ]);
-      setTeacherCount(teachers.length);
-      setStudentCount(students.length);
-      setClassroomCount(classrooms.length);
-      setAssignmentCount(assignments.length);
-    }
-    catch(error){
-      console.error("error fetching dashboard data",error);
-    }
-  };
-  fetchData();
-  },[]);
-
-  const recentTeachers = [
-    { name: 'Mr. Sharma', subject: 'Math' },
-    { name: 'Ms. Kavita', subject: 'Science' },
-    { name: 'Mr. Ajay', subject: 'English' }
-  ];
-
-  const teacherRegistrationData = [
-    { month: 'Jan', teachers: 2 },
-    { month: 'Feb', teachers: 5 },
-    { month: 'Mar', teachers: 3 },
-    { month: 'Apr', teachers: 6 },
-    { month: 'May', teachers: 4 },
-    { month: 'Jun', teachers: 8 }
-  ];
+    getAllCount();
+  }, []);
 
   return (
     <div className="admin-dashboard container-fluid py-4">
@@ -60,11 +45,39 @@ export default function AdminDashboard() {
 
       {/* Top Stat Cards */}
       <div className="row g-4 mb-4">
-        <StatCard title="Total Teachers" value={teacherCount} color="primary" />
-        <StatCard title="Total Students" value={studentCount} color="success" />
-        <StatCard title="Total Classrooms" value={classroomCount} color="info" />
-        <StatCard title="Total Assignments" value={assignmentCount} color="warning" />
-      </div> 
+        <StatCard
+          title="Total Teachers"
+          value={counts.teachers}
+          color="primary"
+        />
+        <StatCard
+          title="Total Students"
+          value={counts.students}
+          color="success"
+        />
+        <StatCard
+          title="Total Classrooms"
+          value={counts.classrooms}
+          color="info"
+        />
+        <StatCard
+          title="Total Assignments"
+          value={counts.assignments}
+          color="warning"
+        />
+      </div>
+      <div className="card shadow-sm p-3 mb-4">
+        <h5>Monthly Teacher Registrations</h5>
+        <ResponsiveContainer width="100%" height={250}>
+          <BarChart data={teacherRegistrationData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="teachers" fill="#0d6efd" />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }

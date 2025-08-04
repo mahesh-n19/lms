@@ -2,14 +2,18 @@ package com.nic.service;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.cors.CorsConfigurationSource;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.nic.dto.ClassroomDetailsDto;
+import com.nic.dto.ClassroomDto;
 import com.nic.entity.ClassroomDetails;
 import com.nic.entity.ResponseDto;
 import com.nic.repository.ClassroomDetailsRepo;
@@ -23,6 +27,9 @@ public class ClassroomServiceImpl implements ClassroomService{
 	
 	@Autowired
 	private ClassroomDetailsRepo classroomDetailsRepo;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
     ClassroomServiceImpl(CorsConfigurationSource corsConfigurationSource) {
         this.corsConfigurationSource = corsConfigurationSource;
@@ -79,4 +86,17 @@ public class ClassroomServiceImpl implements ClassroomService{
 		return response;
 	}
 
-}
+	@Override
+	public List<ClassroomDto> getAllClassrooms() {
+	    List<ClassroomDetails> classrooms = classroomDetailsRepo.findAll();
+	    List<ClassroomDto> classroomDtoList = new ArrayList<>();
+	    
+	    for (ClassroomDetails c : classrooms) {
+	        ClassroomDto dto = modelMapper.map(c, ClassroomDto.class);
+	        classroomDtoList.add(dto);
+	    }
+	    
+	    return classroomDtoList;
+	}
+}	
+
