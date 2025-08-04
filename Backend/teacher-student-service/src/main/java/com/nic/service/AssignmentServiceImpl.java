@@ -9,7 +9,9 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nic.dto.AssignmentDto;
+import com.nic.dto.ClassroomDto;
 import com.nic.dto.EvaluateAssignmentDetailsDto;
 import com.nic.dto.EvaluateDto;
 import com.nic.dto.GradedAssignmentDto;
@@ -27,10 +30,13 @@ import com.nic.dto.SubmitAssignmentDto;
 import com.nic.dto.SubmittedAssignmentDto;
 import com.nic.dto.SubmittedAssignmentStudentDetailsDto;
 import com.nic.entity.Assignment;
+import com.nic.entity.ClassroomDetails;
 import com.nic.entity.ResponseDto;
 import com.nic.entity.StudentAssignmentSubmission;
 import com.nic.repository.AssignmentRepo;
+import com.nic.repository.ClassroomDetailsRepo;
 import com.nic.repository.StudentAssignmentSubmissionRepo;
+import com.nic.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -45,7 +51,12 @@ public class AssignmentServiceImpl implements AssignmentService {
 	 
 	 @Autowired 
 	 private StudentAssignmentSubmissionRepo studentSubmissionRepo; 
+	 
+	 @Autowired
+	 private UserRepository userRepo;
 
+	 @Autowired
+	 private ClassroomDetailsRepo classroomRepo;
 	@Transactional
 	@Override
 	public ResponseDto createAssignment(AssignmentDto assignmentDto, MultipartFile pdfFile) {
@@ -113,11 +124,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 	@Override
 	public List<Assignment> getAllAssignments(int classroomId) {
 		List<Assignment> assignment = new ArrayList<>();
-		assignment=assignmentRepo.getAssignmentsByClassroomId(classroomId);
-
-//		GetAssignmentDto getAssignments=new GetAssignmentDto();
-//		getAssignments.set;		
-
+		assignment=assignmentRepo.getAssignmentsByClassroomId(classroomId);		
 		return assignment;
 	}
 	
@@ -308,7 +315,43 @@ public class AssignmentServiceImpl implements AssignmentService {
 		 
 		return response;
 	}
+
+	@Override
+	public List<AssignmentDto> getAllAssignmentAvailable(int classroomId) {
+		 List<Assignment> assignments = assignmentRepo.findAll();
+		 List<AssignmentDto> dtos=new ArrayList<>();
+		for (Assignment a : assignments) {
+	        AssignmentDto dto = modelMapper.map(a, AssignmentDto.class);
+	        dtos.add(dto);
+	    }
+		return dtos;
+	}
+
+	@Override
+	public ResponseDto getAdminCount() {
+		
+		int teacherCount = userRepo.countTeacher();
+		int studentCount=userRepo.countStudent();
+		int classroomCount=classroomRepo.countClassrooms();
+		int assignmentsCount=assignmentRepo.countAssignments();
+		System.out.println("Teacher count : "+teacherCount);
+		
+		ResponseDto response = new ResponseDto();
+		
+		Map<String, Integer> counts = new HashMap<>();
+		counts.put("teachers", teacherCount);
+		counts.put("students", studentCount);
+		counts.put("classrooms", classroomCount);
+		counts.put("assignments", assignmentsCount);
+		response.setData(counts);
+		response.setMessage("Counts fetched successfulluy");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		
+		return response;
+	}
 	
 }
+
 
 

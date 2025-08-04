@@ -1,7 +1,9 @@
 package com.nic.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,21 +11,31 @@ import org.springframework.stereotype.Service;
 
 import com.nic.config.User;
 import com.nic.dto.RegisterUserDto;
+import com.nic.dto.UserSummaryDto;
 import com.nic.entity.ClassroomDetails;
 import com.nic.entity.ResponseDto;
 import com.nic.repository.ClassroomDetailsRepo;
+import com.nic.repository.StudentAssignmentSubmissionRepo;
 import com.nic.repository.UserRepository;
-
 
 
 @Service
 public class UserServiceImpl implements UserService{
 
+    private final StudentAssignmentSubmissionRepo studentAssignmentSubmissionRepo;
+
 	@Autowired
 	private UserRepository userRepo;
 	
 	@Autowired
+    private ModelMapper modelMapper;
+	
+	@Autowired
 	private ClassroomDetailsRepo classRoomRepo;
+
+    UserServiceImpl(StudentAssignmentSubmissionRepo studentAssignmentSubmissionRepo) {
+        this.studentAssignmentSubmissionRepo = studentAssignmentSubmissionRepo;
+    }
 	
 	public User getUserDetailsByEmail(String email)
 	{
@@ -96,6 +108,18 @@ public class UserServiceImpl implements UserService{
 		
 		return response;
 		
+	}
+
+
+	@Override
+	public List<UserSummaryDto> getUsersByRole(String role) {
+       List<User> users=userRepo.findByRole(role);
+       List<UserSummaryDto> userDtos=new ArrayList<>();
+       for(User user:users) {
+    	   UserSummaryDto dto=modelMapper.map(user, UserSummaryDto.class);
+    	   userDtos.add(dto);
+       }
+       return userDtos;
 	}
 	
 	

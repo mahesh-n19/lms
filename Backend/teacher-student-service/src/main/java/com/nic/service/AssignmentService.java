@@ -28,4 +28,9 @@ public interface AssignmentService {
   public ResponseDto getSubmissionDetailsBySubmissionId(long submissioId);
   
   public ResponseDto evaluateSubmissionBuSubmissionId(long submissionId, EvaluateDto evaluate);
+
+  List<AssignmentDto> getAllAssignmentAvailable(int classroomId);
+  
+  public ResponseDto getAdminCount();
+  
 }

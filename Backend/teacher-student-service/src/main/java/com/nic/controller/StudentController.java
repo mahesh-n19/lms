@@ -19,7 +19,6 @@ import com.nic.service.StudentService;
 @RequestMapping("/api/v1")
 public class StudentController {
 
-	
 	@Autowired
 	private StudentService studentService;
 	
