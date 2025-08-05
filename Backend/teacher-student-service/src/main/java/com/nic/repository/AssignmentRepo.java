@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import com.nic.dto.AssignmentDto;
+import com.nic.dto.SubmittedAssignmentStudentDetailsDto;
 import com.nic.entity.Assignment;
 
 public interface AssignmentRepo extends JpaRepository<Assignment, Long>{
@@ -18,5 +19,8 @@ public interface AssignmentRepo extends JpaRepository<Assignment, Long>{
 	
 	@Query("From Assignment a where a.assignmentId=?1")
 	public Assignment getByAssignmentId(long assignmentId);
+	
+	
+	
 	
 }

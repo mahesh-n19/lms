@@ -29,7 +29,7 @@ export default function EnrolledStudents() {
     <div>
         
 
-        <div className='container mt-5'>
+        <div className='container mt-5 py-2'>
 
             <DataTable value={approvedEnrollments} stripedRows showGridlines size='small'
                                                 paginator rows={5} rowsPerPageOptions={[5, 10, 25, 50]} 

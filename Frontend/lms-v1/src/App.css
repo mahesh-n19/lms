@@ -100,3 +100,21 @@ hr
     display: flex;
     gap: 15px;
 }
+
+.container 
+{
+    border: 1px solid #817777;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.assignment-container
+{
+    padding: 10px;
+}
+
+.form-control 
+{
+    border-color: #585e63 !important; 
+}

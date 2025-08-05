@@ -33,10 +33,16 @@ import Students from './components/teacher/Students'
 import ViewAssginment from './components/teacher/ViewAssignment'
 import EnrolledStudents from './components/teacher/EnrolledStudents'
 import PendingStudents from './components/teacher/PendingStudents'
+import LoginForm from './components/landing/LoginForm'
+
 import Home from './components/landing/home'
 import StudentClassroom from './components/user/StudentClassroom'
 import StudentAssignment from './components/user/StudentAssignment'
 import AddStudentAssignment from './components/user/AddStudentAssignment';
+import AssignmentSubmittedStudents from './components/teacher/AssignmentSubmittedStudents'
+import AssignmentNotSubmittedStudents from './components/teacher/AssignmentNotSubmittedStudents'
+import AssignmentGradedStudentDetails from './components/teacher/AssignmentGradedStudentDetails'
+import EvaluateStudentAssignment from './components/teacher/EvaluateStudentAssignment'
 
 function App() {
  
@@ -44,12 +50,12 @@ function App() {
   return (
     <>
   <AuthProvider>
-      <Routes>
 
-        <Route path='/' element={<Home />} />
-        <Route path='/login' element={ <Render /> }/>
-        <Route path='/register' element={<Register/>}/>
-        
+         <Routes>
+  <Route path='/' element={<Render />} /> {/* Landing page */}
+  <Route path='/login' element={<LoginForm />} /> {/* Login form */}
+  <Route path='/register' element={<Register />} />
+
             
             <Route path='/admin' element={<RouteGuard allowedRoles={['ROLE_ADMIN']}>
                   <AdminRender />
@@ -93,7 +99,13 @@ function App() {
                         <Route path='' element={<EnrolledStudents/>}/>
                         <Route path='pending' element={<PendingStudents />}/>
                     </Route>
-                    <Route path='view-assignment/:assignmentid' element={<ViewAssginment />} />
+                    <Route path='view-assignment/:assignmentid' element={<ViewAssginment />} >
+                        <Route path=''  element={<AssignmentSubmittedStudents />} />
+                        <Route path='not-submitted' element={<AssignmentNotSubmittedStudents />} />
+                        <Route path='graded' element={<AssignmentGradedStudentDetails />}  />
+                        
+                    </Route>
+                    <Route path='evaluate/:submissionid' element={<EvaluateStudentAssignment />} />
                 </Route>
                 <Route path='*' element={<Dashboard />} />
 

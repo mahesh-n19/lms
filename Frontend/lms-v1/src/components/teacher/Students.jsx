@@ -13,7 +13,7 @@ export default function Students() {
   return (
     <div>
         
-      <div className='enrollment-status'>
+      <div className='enrollment-status mt-2'>
         <button className='btn btn-primary'>
           <NavLink className="classroom-actions" to={`/teacher/classroom/${id}/students`} >Enrolled Students</NavLink>
         </button>

@@ -5,9 +5,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +19,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nic.dto.AssignmentDto;
+import com.nic.dto.EvaluateAssignmentDetailsDto;
+import com.nic.dto.EvaluateDto;
+import com.nic.dto.GradedAssignmentDto;
+import com.nic.dto.NotSubmittedAssignmentStudentDetailsDto;
+import com.nic.dto.SubmitAssignmentDto;
+import com.nic.dto.SubmittedAssignmentDto;
+import com.nic.dto.SubmittedAssignmentStudentDetailsDto;
 import com.nic.entity.Assignment;
 import com.nic.entity.ResponseDto;
+import com.nic.entity.StudentAssignmentSubmission;
 import com.nic.repository.AssignmentRepo;
+import com.nic.repository.StudentAssignmentSubmissionRepo;
 
 import jakarta.transaction.Transactional;
 
@@ -30,8 +42,11 @@ public class AssignmentServiceImpl implements AssignmentService {
 	 
 	 @Autowired
 	 private AssignmentRepo assignmentRepo;
+	 
+	 @Autowired 
+	 private StudentAssignmentSubmissionRepo studentSubmissionRepo; 
 
-	 @Transactional
+	@Transactional
 	@Override
 	public ResponseDto createAssignment(AssignmentDto assignmentDto, MultipartFile pdfFile) {
 		
@@ -100,7 +115,9 @@ public class AssignmentServiceImpl implements AssignmentService {
 		List<Assignment> assignment = new ArrayList<>();
 		assignment=assignmentRepo.getAssignmentsByClassroomId(classroomId);
 
-		
+//		GetAssignmentDto getAssignments=new GetAssignmentDto();
+//		getAssignments.set;		
+
 		return assignment;
 	}
 	
@@ -108,5 +125,190 @@ public class AssignmentServiceImpl implements AssignmentService {
 	{
 		return assignmentRepo.getAssignmentByAssignmentId(assignmentId);
 	}
+
+	@Transactional
+	@Override
+	public ResponseDto submitStudentAssignment(SubmitAssignmentDto assignment, MultipartFile assignmentFile, int studentId) {
+		
+		
+		System.out.println("Assignment Data : "+assignment);
+		System.out.println("File name : "+assignment.getFilename());
+		System.out.println("File Size : "+assignmentFile.getSize());
+		
+		String filePath = "D:\\Drive(F)\\Sunbeam LMS\\lms\\lms_data\\"+assignment.getClassroomId()+"\\"+assignment.getAssignmentId();
+		
+		StudentAssignmentSubmission submissionEntity = new StudentAssignmentSubmission();
+
+		submissionEntity.setAssignmentId(assignment.getAssignmentId());
+		submissionEntity.setStudentId(studentId);
+		submissionEntity.setMarks(0);
+		submissionEntity.setStatus("D");
+		submissionEntity.setSubmissionDate(LocalDate.now().toString());
+		submissionEntity.setFilePath(filePath);
+		submissionEntity.setFileName(assignment.getFilename());
+		if(assignmentFile.getContentType().equals("aaplication/pdf"))
+		{
+			submissionEntity.setFileType("pdf");
+		}
+		else 
+		{
+			submissionEntity.setFileType("zip");
+		}
+		
+		StudentAssignmentSubmission submitted = studentSubmissionRepo.save(submissionEntity);
+		
+		ResponseDto response = new ResponseDto();
+		try
+		{
+			
+			File directory=new File(filePath + "\\" + submitted.getSubmissionId());
+			
+			if(!directory.exists()) {
+				boolean created=directory.mkdirs();
+				System.out.println("directory created");
+				
+			}
+			
+			Path assignmentFilePath = Paths.get(filePath + "\\" + submitted.getSubmissionId() + "\\" + assignment.getFilename());
+			 
+			 
+			 assignmentFile.transferTo(assignmentFilePath.toFile());
+			
+			response.setMessage("Assignment submitted successfully");
+			response.setStatus("success");
+			response.setStatusCode(HttpStatus.OK.value());
+
+		}
+		catch(IOException e)
+		{
+			response.setMessage("Failed to submit assignment");
+			 response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+			 return response;
+		}
+		
+		
+		return response;
+	}
+
+	@Override
+	public ResponseDto getSubmittedAssignmentStatus(int assignmentId, int studentId) {
+		
+		ResponseDto response = new ResponseDto();
+		
+		SubmittedAssignmentDto submissionStatus = studentSubmissionRepo.getSubmittedAssignmentStatus(assignmentId, studentId);
+		
+		if(submissionStatus == null)
+		{
+			response.setMessage("No submission found");
+			response.setStatus("danger");
+			response.setStatusCode(HttpStatus.NOT_FOUND.value());
+		}
+		else 
+		{
+			response.setMessage("Submission found");
+			response.setStatus("success");
+			response.setStatusCode(HttpStatus.OK.value());
+			response.setData(submissionStatus);
+		}
+		
+		return response;
+	}
+
+	@Override
+	public ResponseDto getSubmittedAssignmentDetailsByAssignmentId(long assignmentId) {
+		
+		ResponseDto response = new ResponseDto();
+		
+		List<SubmittedAssignmentStudentDetailsDto> submittedStudents = studentSubmissionRepo.getSubmittedAssignmentDetailsByAssignmentId(assignmentId);
+		
+		response.setData(submittedStudents);
+		response.setMessage("Assignments submitted by students fetched successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		
+		return response;
+	}
+
+	@Override
+	public ResponseDto getStudentDetailsNotSubmittedAssignmentByAssignmentId(long classroomId, long assignmentId) {
+		
+		
+		ResponseDto response = new ResponseDto();
+		
+		List<NotSubmittedAssignmentStudentDetailsDto> notSubmittedStudents = studentSubmissionRepo.getDetailsOfStudentsNotSubmittedAssignmentByAssignmentId( classroomId ,assignmentId);
+		
+		response.setData(notSubmittedStudents);
+		response.setMessage("Student not submitted assignments fetched successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		
+		return response;
+	}
+
+	@Override
+	public ResponseDto getStudentDetailsWhoseAssignmentAreGradedByAssignmentId(long assignmentId) {
+		ResponseDto response = new ResponseDto();
+	
+		
+		List<GradedAssignmentDto> gradedStudents = studentSubmissionRepo.getDetailsOfStudentsWhoseAssignmentsAreGradedByAssignmentId( assignmentId);
+		
+		response.setData(gradedStudents);
+		response.setMessage("Student graded fetched successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		
+		return response;
+	}
+
+	@Override
+	public ResponseDto getSubmissionDetailsBySubmissionId(long submissionId) {
+		
+		ResponseDto response = new ResponseDto();
+		
+		
+		EvaluateAssignmentDetailsDto submissionDetials = studentSubmissionRepo.getSubmissionDetailsForEvaluationBySubmissionId(submissionId);
+		
+		response.setData(submissionDetials);
+		response.setMessage("Submission details fetched successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		 
+		return response;
+	}
+
+	@Transactional
+	@Override
+	public ResponseDto evaluateSubmissionBuSubmissionId(long submissionId, EvaluateDto evaluate) {
+		
+		System.out.println("Service Hit : ");
+		
+		ResponseDto response = new ResponseDto();
+		
+		StudentAssignmentSubmission submissionDetails = studentSubmissionRepo.getSubmissionDetailsBySubmissionId(submissionId);
+		
+		long assignmentId = submissionDetails.getAssignmentId();
+		
+		 Assignment assignment = assignmentRepo.getByAssignmentId(assignmentId);
+		 
+		 if(evaluate.getMarks() > assignment.getMaxMarks())
+		 {
+			 response.setMessage("Invalid marks entered");
+		 }
+		 else 
+		 {
+			 submissionDetails.setMarks(evaluate.getMarks());
+			 submissionDetails.setStatus("A");
+			 response.setMessage("Submission evaluated successfully");
+		
+		 }
+		 
+		 response.setStatus("success");
+		 response.setStatusCode(HttpStatus.OK.value());
+		 
+		 
+		return response;
+	}
 	
 }
+
+
