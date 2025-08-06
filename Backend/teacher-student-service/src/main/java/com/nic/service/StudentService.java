@@ -15,4 +15,7 @@ public interface StudentService {
 	
 	public ResponseDto getJoinedClassroomDetailsByStudentId(String authHeader);
 	public ResponseDto getAssignmentsByClassroomId(int classroomId);
+	
+	// method for student dashboard
+	public ResponseDto studentDashboard(int studentID);
 }

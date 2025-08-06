@@ -82,7 +82,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 //	     entity.setDueDate(formattedDate);
 	     
 	     
-	     String path="D:\\Drive(F)\\Sunbeam LMS\\lms\\lms_data\\"+assignmentDto.getClassroomId();
+	     String path="C:\\Users\\iamaj\\OneDrive\\Desktop\\sunbeam cdac\\cdac project\\lms\\lms_data\\"+assignmentDto.getClassroomId();
 
 
 	     entity.setFilePath(path);
@@ -142,7 +142,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 		System.out.println("File name : "+assignment.getFilename());
 		System.out.println("File Size : "+assignmentFile.getSize());
 		
-		String filePath = "D:\\Drive(F)\\Sunbeam LMS\\lms\\lms_data\\"+assignment.getClassroomId()+"\\"+assignment.getAssignmentId();
+		String filePath = "C:\\Users\\iamaj\\OneDrive\\Desktop\\sunbeam cdac\\cdac project\\lms\\lms_data\\"+assignment.getClassroomId()+"\\"+assignment.getAssignmentId();
 		
 		StudentAssignmentSubmission submissionEntity = new StudentAssignmentSubmission();
 

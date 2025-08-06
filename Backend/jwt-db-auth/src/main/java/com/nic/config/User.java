@@ -1,4 +1,4 @@
-package com.nic.config;
+ package com.nic.config;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

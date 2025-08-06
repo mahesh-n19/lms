@@ -1,7 +1,9 @@
 package com.nic.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import com.nic.dto.RegisterUserDto;
 import com.nic.dto.UserSummaryDto;
 import com.nic.entity.ClassroomDetails;
 import com.nic.entity.ResponseDto;
+import com.nic.repository.AssignmentRepo;
 import com.nic.repository.ClassroomDetailsRepo;
 import com.nic.repository.StudentAssignmentSubmissionRepo;
 import com.nic.repository.UserRepository;
@@ -32,6 +35,9 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private ClassroomDetailsRepo classRoomRepo;
+	
+	@Autowired
+	private AssignmentRepo assignmentRepo;
 
     UserServiceImpl(StudentAssignmentSubmissionRepo studentAssignmentSubmissionRepo) {
         this.studentAssignmentSubmissionRepo = studentAssignmentSubmissionRepo;
@@ -120,6 +126,29 @@ public class UserServiceImpl implements UserService{
     	   userDtos.add(dto);
        }
        return userDtos;
+	}
+
+	@Override
+	public ResponseDto teacherServiceDashboard(int userId) {
+		// TODO: implement this method
+//		int studentCount=userRepo.countStudentDashboardByTeacherID(userId);
+		int studentCount=userRepo.countStudent();
+		int classroomCount=classRoomRepo.getClassroomCountByTeacherID(userId);
+		int assignmentsCount=assignmentRepo.countAssignments();
+		
+		
+		ResponseDto response = new ResponseDto();
+		
+		Map<String, Integer> counts = new HashMap<>();
+		counts.put("students", studentCount);
+		counts.put("classrooms", classroomCount);
+		counts.put("assignments", assignmentsCount);
+		response.setData(counts);
+		response.setMessage("Counts fetched successfulluy");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		
+		return response;
 	}
 	
 	
