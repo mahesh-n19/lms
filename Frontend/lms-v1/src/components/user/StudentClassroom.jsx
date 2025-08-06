@@ -13,11 +13,11 @@ export default function StudentClassroom() {
 
   const [assignments, setAssignments] = useState([]);
 
-  // const getAssignments = async () => {
-  //   const result = await getStudentAssignmentsByClassroomIdService(id);
-  //   console.log("assignements: ", result.data);
-  //   setAssignments(result.data);
-  // };
+  const getAssignments = async () => {
+    const result = await getStudentAssignmentsByClassroomIdService(id);
+    console.log("assignements: ", result.data);
+    setAssignments(result.data);
+  };
 
   const getClassroomDetails = async () => {
     const result = await getClassroomDetailsByClassroomIdService(id);

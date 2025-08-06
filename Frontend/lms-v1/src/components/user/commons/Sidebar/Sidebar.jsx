@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+
 import { NavLink } from 'react-router-dom'
-import { getJoinedClassroomService } from '../../../service/StudentService';
+import { getJoinedClassroomService } from '../../../../service/StudentService';
+import  './sidebar.css';
 
-export default function Sidebar() {
 
+
+
+const Sidebar = () => {
+  
 
   const [joinedClassroom,setJoinedClassroom] = useState([]);
 
@@ -81,4 +86,7 @@ export default function Sidebar() {
         </ul>
     </div>
   )
+
 }
+
+export default Sidebar

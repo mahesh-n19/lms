@@ -1,4 +1,4 @@
-// import React, { useEffect, useState } from 'react'
+ // import React, { useEffect, useState } from 'react'
 // import { getRegisteredTeacherService } from '../../service/AuthService';
 // import {DataTable} from 'primereact/datatable';
 // import {Column} from 'primereact/column'

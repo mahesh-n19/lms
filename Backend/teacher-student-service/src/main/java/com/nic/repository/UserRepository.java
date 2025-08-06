@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.nic.config.User;
 
@@ -17,6 +18,19 @@ public interface UserRepository extends JpaRepository<User, Integer>{
     public int countTeacher();
     @Query("SELECT COUNT(U) from User U where U.role='ROLE_USER' ")
 	public int countStudent();
+    
+    // method for student count in teacher-dashbard
+//    @Query(value = "SELECT COUNT(*) FROM user WHERE role = 'ROLE_USER' AND user_id = :userID", nativeQuery = true)
+//    public int countStudentDashboardByTeacherID(@Param("userID") int userID);
+//    
+    @Query(value = "SELECT COUNT(se.student_id) AS total_students " +
+            "FROM classroom_details cd " +
+            "JOIN student_enrollment se ON cd.classroom_id = se.classroom_id " +
+            "WHERE cd.teacher_id = :userID AND se.status = 'A'", 
+    nativeQuery = true)
+	public int countStudentDashboardByTeacherID(@Param("userID") int userID);
+	
+
 }
 
 
