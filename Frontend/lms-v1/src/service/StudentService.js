@@ -167,3 +167,33 @@ export async function rejectEnrollmentByClassroomIdAndStudentIdService(classroom
         return e.response.data;
     }
 }
+
+// ------------------------- for student dashboard ------------------------------
+
+export const getAllCountStudentDashboard = async () =>{
+    // const response = await axios.get(`${BASE_URL}/get-count`);
+    // return response.data;
+
+    try
+    {
+        const token = sessionStorage.getItem('token');
+        const url= `${BASE_URL}/get-student-dashboard`;
+
+
+        const response = await axios.get(url,  {
+              headers: {
+                'Authorization' : `Bearer ${token}`
+                },
+            });
+
+            // console.log("API Response : ",response);
+            // console.log("API DATA  : ",response.data);
+            return response.data;
+    }
+    catch(e)
+    {
+        console.log(e);
+        return e.response;
+    }
+
+};
