@@ -119,7 +119,7 @@ export default function JoinClassroom() {
             <div className='row'>
               <div className='col-4 jc-upper-div'>
                   <div className="join-classroom">
-                      <button type="submit" className="btn btn-primary">Create</button>
+                      <button type="submit" className="btn btn-primary">Join</button>
                       <button type="reset" className="btn btn-danger">Reset</button>
                 </div>
               </div>

@@ -107,6 +107,7 @@
     gap: 10px;
 }
 
+
 .logo-img {
   transition: transform 0.2s ease;
 }
@@ -131,4 +132,5 @@
 {
     display: flex;
     gap: 15px;
+
 }

@@ -2,14 +2,14 @@ import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8091/api/v1';
 
-export const getAllCountsService = async () =>{
+export const getAllCountTeacherDashboard = async () =>{
     // const response = await axios.get(`${BASE_URL}/get-count`);
     // return response.data;
 
     try
     {
         const token = sessionStorage.getItem('token');
-        const url= `${BASE_URL}/get-count`;
+        const url= `${BASE_URL}/get-teacher-dashboard`;
 
 
         const response = await axios.get(url,  {
