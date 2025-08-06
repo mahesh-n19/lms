@@ -171,13 +171,10 @@ export async function rejectEnrollmentByClassroomIdAndStudentIdService(classroom
 // ------------------------- for student dashboard ------------------------------
 
 export const getAllCountStudentDashboard = async () =>{
-    // const response = await axios.get(`${BASE_URL}/get-count`);
-    // return response.data;
-
     try
     {
         const token = sessionStorage.getItem('token');
-        const url= `${BASE_URL}/get-student-dashboard`;
+        const url= `${API_URL}/get-student-dashboard`;
 
 
         const response = await axios.get(url,  {
@@ -185,9 +182,7 @@ export const getAllCountStudentDashboard = async () =>{
                 'Authorization' : `Bearer ${token}`
                 },
             });
-
-            // console.log("API Response : ",response);
-            // console.log("API DATA  : ",response.data);
+            console.log(response.data);
             return response.data;
     }
     catch(e)

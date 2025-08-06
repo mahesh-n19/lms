@@ -28,15 +28,5 @@ public interface ClassroomDetailsRepo extends JpaRepository<ClassroomDetails, In
 	@Query(value="select count(*) from classroom_details c where teacher_id=?1",nativeQuery = true)
 	public int getClassroomCountByTeacherID(int userId);
 	
-	// TODO: by particular teacher-id
-	// method for teacher-dashboard
-	@Query(value = """
-	        SELECT COUNT(a.assignment_id)
-	        FROM classroom_details cd
-	        JOIN user u ON u.user_id = cd.teacher_id
-	        LEFT JOIN assignment a ON a.classroom_id = cd.classroom_id
-	        WHERE u.user_id = :userId AND u.role = 'teacher'
-	        """, nativeQuery = true)
-	    int countAssignmentsByTeacher(@Param("userId") Long userId);
-	
+
 }

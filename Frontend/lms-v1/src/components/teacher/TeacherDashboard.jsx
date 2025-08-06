@@ -11,18 +11,38 @@ import {
 } from "recharts";
 
 function TeacherDashboard() {
+
   const [counts, setCounts] = useState({});
+  const [teacherName, setTeacherName] = useState("");
+
   const getAllCount = async () => {
-    const result = await getAllCountTeacherDashboard();
+    try {
+      const result = await getAllCountTeacherDashboard();
+      console.log("result : ", result.data);
 
-    console.log("result : ", result.data);
+      setCounts(result?.data);
 
-    setCounts(result?.data);
-    // console.log("counts : ",counts)
+      // Extract teacher name (extra key)
+      const allowedKeys = ["assignments", "classrooms", "students"];
+      const extraKeys = Object.keys(result.data).filter(
+        (key) => !allowedKeys.includes(key)
+      );
+
+      console.log("This is teacher name: ", extraKeys);
+
+      // Set the first extra key as teacher name
+      if (extraKeys.length > 0) {
+        setTeacherName(extraKeys[0]);
+      }
+    } catch (error) {
+      console.error("Error fetching count data", error);
+    }
   };
+
   useEffect(() => {
     getAllCount();
   }, []);
+
   const teacherRegistrationData = [
     { month: "Jan", teachers: 4 },
     { month: "Feb", teachers: 6 },
@@ -34,10 +54,12 @@ function TeacherDashboard() {
     { month: "Aug", teachers: 5 },
   ];
 
+
   return (
     <>
       <div className="teacher-dashboard container-fluid py-4">
-        <h2 className="mb-4 fw-bold">Teacher Dashboard</h2>
+
+        <h2 className="mb-4 fw-bold">Teacher Dashboard <br /> Welcome, {teacherName}</h2>
 
         {/* Top Stat Cards */}
         <div className="row g-4 mb-4">
@@ -58,7 +80,7 @@ function TeacherDashboard() {
           />
         </div>
         <div className="card shadow-sm p-3 mb-4">
-          <h5>Monthly Teacher Registrations</h5>
+          <h5>Student Enrollments</h5>
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={teacherRegistrationData}>
               <CartesianGrid strokeDasharray="3 3" />
@@ -73,17 +95,17 @@ function TeacherDashboard() {
     </>
   );
 }
-function StatCard({ title, value, color }) {
-  return (
-    <div className="col-md-3">
-      <div className={`card stat-card border-${color} shadow-sm`}>
-        <div className="card-body text-center">
-          <h6 className="text-muted">{title}</h6>
-          <h2 className={`text-${color}`}>{value}</h2>
+  function StatCard({ title, value, color }) {
+    return (
+      <div className="col-md-3">
+        <div className={`card stat-card border-${color} shadow-sm`}>
+          <div className="card-body text-center">
+            <h6 className="text-muted">{title}</h6>
+            <h2 className={`text-${color}`}>{value}</h2>
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
-export default TeacherDashboard;
+  export default TeacherDashboard;

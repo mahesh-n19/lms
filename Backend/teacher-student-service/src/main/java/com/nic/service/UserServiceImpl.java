@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService{
 	
 	@Autowired
 	private AssignmentRepo assignmentRepo;
+	
 
     UserServiceImpl(StudentAssignmentSubmissionRepo studentAssignmentSubmissionRepo) {
         this.studentAssignmentSubmissionRepo = studentAssignmentSubmissionRepo;
@@ -131,10 +132,11 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public ResponseDto teacherServiceDashboard(int userId) {
 		// TODO: implement this method
-//		int studentCount=userRepo.countStudentDashboardByTeacherID(userId);
-		int studentCount=userRepo.countStudent();
+		int studentCount=userRepo.countStudentDashboardByTeacherID(userId);
+		String userName = userRepo.findById(userId).get().getName();
 		int classroomCount=classRoomRepo.getClassroomCountByTeacherID(userId);
-		int assignmentsCount=assignmentRepo.countAssignments();
+		Integer count=assignmentRepo.assigmentCountByTeacherID(userId);
+		int assignmentsCount = count != null ? count : 0;
 		
 		
 		ResponseDto response = new ResponseDto();
@@ -143,6 +145,7 @@ public class UserServiceImpl implements UserService{
 		counts.put("students", studentCount);
 		counts.put("classrooms", classroomCount);
 		counts.put("assignments", assignmentsCount);
+		counts.put(userName,1);
 		response.setData(counts);
 		response.setMessage("Counts fetched successfulluy");
 		response.setStatus("success");

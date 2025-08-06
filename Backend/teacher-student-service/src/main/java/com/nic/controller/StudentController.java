@@ -24,6 +24,12 @@ public class StudentController {
 
 	@Autowired
 	private StudentService studentService;
+	private final JwtUtils jwtUtils;
+	
+    @Autowired
+    public StudentController(JwtUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
+    }
 	
 	@PreAuthorize("hasRole('USER')")
 	@PostMapping("/join-classroom")
@@ -87,12 +93,12 @@ public class StudentController {
 	@PreAuthorize("hasRole('USER')")
 	@GetMapping("/get-student-dashboard")
 	public ResponseDto getAllCount(@RequestHeader("Authorization") String authHeader) {
-		String token = authHeader.replace("Bearer ","").trim();
-		JwtUtils jwtUtils = new JwtUtils();
-		Claims payload = jwtUtils.getPayloadFromJwt(token);
-		int userId = Integer.parseInt(payload.get("userid").toString());
-		
-		return studentService.studentDashboard(userId);
+		String token = authHeader.replace("Bearer ", "").trim();
+        Claims payload = jwtUtils.getPayloadFromJwt(token);
+        int userId = Integer.parseInt(payload.get("userid").toString());
+        ResponseDto dto = studentService.studentDashboard(userId);
+        System.out.println("============================== " + dto);
+        return dto;
 	}
 	
 	

@@ -21,7 +21,9 @@ import com.nic.entity.ResponseDto;
 import com.nic.entity.StudentEnrollment;
 import com.nic.repository.AssignmentRepo;
 import com.nic.repository.ClassroomDetailsRepo;
+import com.nic.repository.StudentAssignmentSubmissionRepo;
 import com.nic.repository.StudentEnrollmentRepo;
+import com.nic.repository.UserRepository;
 
 import io.jsonwebtoken.Claims;
 import jakarta.transaction.Transactional;
@@ -37,6 +39,12 @@ public class StudentServiceImpl implements StudentService {
 	
 	@Autowired
 	private AssignmentRepo assignmentRepo;
+	
+	@Autowired
+	private StudentAssignmentSubmissionRepo assignmentSubmissionRepo;
+	
+	@Autowired
+	private UserRepository userRepo;
 	
 	@Autowired
 	JwtUtils jwtUtils;
@@ -229,13 +237,19 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public ResponseDto studentDashboard(int studentID) {
 		int classroomCountByStudent = studentEnrollmentRepo.getCountClassroomByStudentID(studentID);
-		int totalAssignmentCount = assignmentRepo.countAssignments();
+		Integer totalAssignment = assignmentRepo.countAssignmentsForStudent(studentID);
+		int totalAssignmentCount = totalAssignment != null ? totalAssignment : 0;
+		Integer assignemtMarks = assignmentSubmissionRepo.getStudentAssignmentsMarks(studentID);
+		int totalMarks = assignemtMarks != null ? assignemtMarks : 0;
+		String studentName = userRepo.findById(studentID).get().getName();
 		
 		ResponseDto response = new ResponseDto();
 		
 		Map<String, Integer> counts = new HashMap<>();
 		counts.put("classrooms_count", classroomCountByStudent);
 		counts.put("assignments_count", totalAssignmentCount);
+		counts.put("assignemt_marks", totalMarks);
+		counts.put(studentName, 1);
 		response.setData(counts);
 		response.setMessage("Counts fetched successfulluy");
 		response.setStatus("success");

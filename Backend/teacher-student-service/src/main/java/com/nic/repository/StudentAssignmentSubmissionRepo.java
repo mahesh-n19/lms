@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import com.nic.dto.EvaluateAssignmentDetailsDto;
 import com.nic.dto.GradedAssignmentDto;
@@ -12,6 +14,7 @@ import com.nic.dto.SubmittedAssignmentDto;
 import com.nic.dto.SubmittedAssignmentStudentDetailsDto;
 import com.nic.entity.StudentAssignmentSubmission;
 
+@Repository
 public interface StudentAssignmentSubmissionRepo extends JpaRepository<StudentAssignmentSubmission, Long> {
 
 	
@@ -48,5 +51,10 @@ public interface StudentAssignmentSubmissionRepo extends JpaRepository<StudentAs
 	
 	@Query("FROM StudentAssignmentSubmission SAS where SAS.submissionId=?1")
 	public StudentAssignmentSubmission getSubmissionDetailsBySubmissionId(long submissionId);
+	
+	// student assignment marks dashboard
+	@Query(value = "SELECT SUM(marks) FROM student_assignment_submission WHERE student_id = :userID", nativeQuery = true)
+	Integer getStudentAssignmentsMarks(@Param("userID") int userID);
+
 	
 }

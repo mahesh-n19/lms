@@ -15,7 +15,6 @@
 //       console.log("My Created classroom : ",result.data)
 
 //       setMyClassroom(result.data);
-     
 
 //     }
 
@@ -27,17 +26,17 @@
 
 //   return (
 //     <div className='teacher-sidebar'>
-      
+
 //       <ul className='sidebar-ul'>
 //           <li className='sidebar-li'>
-//             <img className='sidebar-icons' src='/icons/dashboard.png'/> 
-//             <NavLink to='/teacher/dashboard'>Dashboard</NavLink> 
+//             <img className='sidebar-icons' src='/icons/dashboard.png'/>
+//             <NavLink to='/teacher/dashboard'>Dashboard</NavLink>
 //           </li>
 
 //           <hr />
 
 //           <li className='sidebar-li'>
-//             <img className='sidebar-icons' src='/icons/add.png'/> 
+//             <img className='sidebar-icons' src='/icons/add.png'/>
 //             <NavLink to='/teacher/create-classroom'>Create Classroom</NavLink>
 //           </li>
 
@@ -50,10 +49,10 @@
 //                <h2 className="accordion-header">
 //                 <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 //                    <div className='my-classroom'>
-//                         <img src="/icons/classroom.png" alt="Classroom Icon" width="50px" /> 
+//                         <img src="/icons/classroom.png" alt="Classroom Icon" width="50px" />
 //                         <p>My Classroom</p>
 //                    </div>
-                   
+
 //                 </button>
 //               </h2>
 
@@ -67,33 +66,49 @@
 //                           return <li className='class-list' key={classroom.classRoomId}>
 
 //                                     <img src="/icons/class.png" alt="Classroom" width="30px"/>
-//                                    <NavLink to={`/teacher/classroom/${classroom.classRoomId}`} >{classroom.classRoomCode} - {classroom.title} </NavLink>   
-                                      
+//                                    <NavLink to={`/teacher/classroom/${classroom.classRoomId}`} >{classroom.classRoomCode} - {classroom.title} </NavLink>
+
 //                                 </li>
 
 //                         })}
 
-//                   </ul>    
-                    
+//                   </ul>
+
 //                 </div>
 //               </div>
 
 //             </div>
 //           </div>
-         
+
 //         </ul>
 
 //     </div>
 //   )
 // }
 
-import React, { useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { useAuth } from '../../../context/AuthContext';
-import { myCreatedClassroomService } from '../../../service/ClassroomService';
-import './TeacherSidebar.css'; // ← link to your new CSS
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../../../context/AuthContext";
+import { myCreatedClassroomService } from "../../../service/ClassroomService";
+import "./TeacherSidebar.css"; // ← link to your new CSS
 
 export default function Sidebar() {
+  // copy classroom code function
+  const [copied, setCopied] = useState(false);
+
+  const handleDoubleClick = (id) => {
+    navigator.clipboard.writeText(id)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+        alert("classroom code copied: " + id);
+      })
+      .catch((err) => {
+        console.error('Failed to copy!', err);
+        alert("Failed to copy!");
+      });
+  };
+
   const { myClassroom, setMyClassroom, fetchSidebar } = useAuth();
 
   const myCreatedClassroom = async () => {
@@ -110,7 +125,11 @@ export default function Sidebar() {
       <ul className="sidebar-ul">
         <li className="sidebar-li">
           <NavLink to="/teacher/dashboard" className="sidebar-link">
-            <img className="sidebar-icon" src="/icons/dashboard.png" alt="Dashboard" />
+            <img
+              className="sidebar-icon"
+              src="/icons/dashboard.png"
+              alt="Dashboard"
+            />
             <span>Dashboard</span>
           </NavLink>
         </li>
@@ -135,7 +154,12 @@ export default function Sidebar() {
                   aria-expanded="false"
                   aria-controls="collapseOne"
                 >
-                  <img src="/icons/classroom.png" alt="Classroom Icon" width="30px" className="me-2" />
+                  <img
+                    src="/icons/classroom.png"
+                    alt="Classroom Icon"
+                    width="30px"
+                    className="me-2"
+                  />
                   <span>My Classrooms</span>
                 </button>
               </h2>
@@ -150,11 +174,20 @@ export default function Sidebar() {
                       <li className="class-list" key={classroom.classRoomId}>
                         <NavLink
                           to={`/teacher/classroom/${classroom.classRoomId}`}
-                          className="sidebar-link small"
+                          className="sidebar-link small d-flex align-items-center"
+                          onDoubleClick={()=>  handleDoubleClick(classroom.classRoomCode)}
+                          
                         >
-                          <img src="/icons/class.png" width="20px" className="me-2" />
+                          <img
+                            src="/icons/class.png"
+                            width="20px"
+                            className="me-2"
+                            style={{ paddingRight: "5px" }}
+                            alt="Class"
+                          />
                           {classroom.classRoomCode} - {classroom.title}
                         </NavLink>
+                       
                       </li>
                     ))}
                   </ul>
