@@ -14,4 +14,7 @@ public interface UserService {
 	public User getUserDetailsByEmail(String email);
 	public ResponseDto getMyCreatedClassroom(int userId);
     public List<UserSummaryDto>getUsersByRole(String role);
+    
+    // for teacher dashboard service methd
+    public ResponseDto teacherServiceDashboard(int userId);
 }
