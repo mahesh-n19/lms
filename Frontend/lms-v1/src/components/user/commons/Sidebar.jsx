@@ -1,84 +1,104 @@
-import React, { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import { getJoinedClassroomService } from '../../../service/StudentService';
+
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { getJoinedClassroomService } from "../../../service/StudentService";
+import "../user.css";
 
 export default function Sidebar() {
+  const [joinedClassroom, setJoinedClassroom] = useState([]);
 
+  useEffect(() => {
+    const fetchJoinedClassroom = async () => {
+      const result = await getJoinedClassroomService();
 
-  const [joinedClassroom,setJoinedClassroom] = useState([]);
+      console.log("Joined classroom : ",result.data);
+      setJoinedClassroom(result.data);
+    };
 
-
-  useEffect(()=>{
-
-    const getJoinedClassroom = async ()=>{
-
-        const result = await getJoinedClassroomService();
-
-        setJoinedClassroom(result.data);
-
-    }
-
-    getJoinedClassroom();
-
-  },[]);
+    fetchJoinedClassroom();
+  }, []);
 
   return (
-    <div className='user-sidebar'>
-        <ul className='sidebar-ul'>
-          
-          <li className='sidebar-li'>
-            <img className='sidebar-icons' src='/icons/dashboard.png'/> 
-            <NavLink to='/user/dashboard'>Dashboard</NavLink>
-          </li>
+    <div className="student-sidebar">
+      <ul className="sidebar-ul">
+        <li className="sidebar-li">
+          <NavLink to="/user/dashboard" className="sidebar-link">
+            <img
+              className="sidebar-icon"
+              src="/icons/dashboard.png"
+              alt="Dashboard"
+            />
+            <span>Dashboard</span>
+          </NavLink>
+        </li>
 
-          <hr />
+        <li className="sidebar-li">
+          <NavLink to="/user/join-classroom" className="sidebar-link">
+            <img className="sidebar-icon" src="/icons/add.png" alt="Join" />
+            <span>Join Classroom</span>
+          </NavLink>
+        </li>
 
-          <li className='sidebar-li'>
-            <img className='sidebar-icons' src='/icons/add.png'/>  
-            <NavLink to='/user/join-classroom'>Join Classroom</NavLink>
-          </li>
+        {/* Accordion Section */}
+        <li className="sidebar-li mt-3">
+          <div className="accordion" id="studentAccordion">
+            <div className="accordion-item border-0">
+              <h2 className="accordion-header">
+                <button
+                  className="accordion-button collapsed bg-light"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="false"
+                  aria-controls="collapseOne"
+                >
+                  <img
+                    src="/icons/classroom.png"
+                    alt="Classroom Icon"
+                    width="24px"
+                    className="me-2"
+                  />
+                  <span className="text-nowrap">My Classrooms</span>
+                </button>
+              </h2>
+              <div
+                id="collapseOne"
+                className="accordion-collapse collapse"
+                data-bs-parent="#studentAccordion"
+              >
+                <div className="accordion-body p-0">
+                  <ul className="class-list-ul ps-3">
+                    {joinedClassroom.map((classroom) => {
 
-          <hr />
 
-          <div className="accordion" id="accordionExample">
+                        return (
 
-            <div className="accordion-item">
-               <h2 className="accordion-header">
-                  <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                   <div className='my-classroom'>
-                        <img src="/icons/classroom.png" alt="Classroom Icon" width="50px" /> 
-                        <p>My Classroom</p>
-                   </div>
-                   
-                  </button>
-                </h2>
+                           <li className="class-list" key={classroom.classroomId}>
+                            <NavLink
+                              to={`/user/classroom/${classroom.classroomId}`}
+                              className="sidebar-link small"
+                            >
+                              <img
+                                src="/icons/class.png"
+                                width="20px"
+                                className="me-2"
+                              />
+                              {classroom.classroomCode} - {classroom.title}
+                            </NavLink>
+                          </li>
+                        );
+                    }
 
-                <div id="collapseOne" className="accordion-collapse collapse show" data-bs-parent="#accordionExample">
-
-                  <div className="accordion-body">
-                    <ul className='class-list-ul'>
-                      {
-                        joinedClassroom.map((classroom)=>{
-
-                          
-                          return <li className='class-list' key={classroom.classroomId}>
-                          
-                                      <img src="/icons/class.png" alt="Classroom" width="30px"/>
-                                      <NavLink to={`/user/classroom/${classroom.classroomId}`} >{classroom.classroomCode} - {classroom.title} </NavLink>   
-                                      
-                                  </li>
-
-                        })
-                      }
-                    </ul>
-                  </div>
-
+                    
+                       
+                    )}
+                  </ul>
                 </div>
-
               </div>
+            </div>
           </div>
-         
-        </ul>
+        </li>
+      </ul>
     </div>
-  )
+  );
 }
