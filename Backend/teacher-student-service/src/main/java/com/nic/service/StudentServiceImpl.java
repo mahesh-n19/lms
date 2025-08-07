@@ -1,7 +1,9 @@
 package com.nic.service;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,13 +21,15 @@ import com.nic.entity.ResponseDto;
 import com.nic.entity.StudentEnrollment;
 import com.nic.repository.AssignmentRepo;
 import com.nic.repository.ClassroomDetailsRepo;
+import com.nic.repository.StudentAssignmentSubmissionRepo;
 import com.nic.repository.StudentEnrollmentRepo;
+import com.nic.repository.UserRepository;
 
 import io.jsonwebtoken.Claims;
 import jakarta.transaction.Transactional;
 
 @Service
-public class StudentServiceImpl implements StudentService{
+public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private StudentEnrollmentRepo studentEnrollmentRepo;
@@ -35,6 +39,12 @@ public class StudentServiceImpl implements StudentService{
 	
 	@Autowired
 	private AssignmentRepo assignmentRepo;
+	
+	@Autowired
+	private StudentAssignmentSubmissionRepo assignmentSubmissionRepo;
+	
+	@Autowired
+	private UserRepository userRepo;
 	
 	@Autowired
 	JwtUtils jwtUtils;
@@ -216,6 +226,32 @@ public class StudentServiceImpl implements StudentService{
 		
 		response.setData(assignments);
 		response.setMessage("Assignments fetched successfully");
+		response.setStatus("success");
+		response.setStatusCode(HttpStatus.OK.value());
+		
+		return response;
+	}
+	
+	// method student dashboard
+
+	@Override
+	public ResponseDto studentDashboard(int studentID) {
+		int classroomCountByStudent = studentEnrollmentRepo.getCountClassroomByStudentID(studentID);
+		Integer totalAssignment = assignmentRepo.countAssignmentsForStudent(studentID);
+		int totalAssignmentCount = totalAssignment != null ? totalAssignment : 0;
+		Integer assignemtMarks = assignmentSubmissionRepo.getStudentAssignmentsMarks(studentID);
+		int totalMarks = assignemtMarks != null ? assignemtMarks : 0;
+		String studentName = userRepo.findById(studentID).get().getName();
+		
+		ResponseDto response = new ResponseDto();
+		
+		Map<String, Integer> counts = new HashMap<>();
+		counts.put("classrooms_count", classroomCountByStudent);
+		counts.put("assignments_count", totalAssignmentCount);
+		counts.put("assignemt_marks", totalMarks);
+		counts.put(studentName, 1);
+		response.setData(counts);
+		response.setMessage("Counts fetched successfulluy");
 		response.setStatus("success");
 		response.setStatusCode(HttpStatus.OK.value());
 		

@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nic.config.JwtUtils;
 import com.nic.dto.EnrollmentActionDto;
 import com.nic.dto.JoinClassroomDto;
 import com.nic.entity.ResponseDto;
 import com.nic.service.StudentService;
+
+import io.jsonwebtoken.Claims;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -21,6 +24,12 @@ public class StudentController {
 
 	@Autowired
 	private StudentService studentService;
+	private final JwtUtils jwtUtils;
+	
+    @Autowired
+    public StudentController(JwtUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
+    }
 	
 	@PreAuthorize("hasRole('USER')")
 	@PostMapping("/join-classroom")
@@ -78,6 +87,18 @@ public class StudentController {
 	public ResponseDto getAssignmentsByClassroomId(@PathVariable("id") int classroomId) {
 		
 		return studentService.getAssignmentsByClassroomId(classroomId);
+	}
+	
+	// method for student dashboard
+	@PreAuthorize("hasRole('USER')")
+	@GetMapping("/get-student-dashboard")
+	public ResponseDto getAllCount(@RequestHeader("Authorization") String authHeader) {
+		String token = authHeader.replace("Bearer ", "").trim();
+        Claims payload = jwtUtils.getPayloadFromJwt(token);
+        int userId = Integer.parseInt(payload.get("userid").toString());
+        ResponseDto dto = studentService.studentDashboard(userId);
+        System.out.println("============================== " + dto);
+        return dto;
 	}
 	
 	

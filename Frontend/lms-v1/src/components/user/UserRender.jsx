@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from './commons/header'
-import Sidebar from './commons/Sidebar'
+import Sidebar from './commons/Sidebar/Sidebar'
 import './user.css'
 import Content from './commons/Content'
 

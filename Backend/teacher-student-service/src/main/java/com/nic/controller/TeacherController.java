@@ -39,9 +39,11 @@ public class TeacherController {
 	{
 		
 		String token = authHeader.replace("Bearer ","");
+		System.out.println("---------------------====================" + obj);
 		
 		System.out.println("Token With bearer : "+authHeader);
-		Claims payload = jwtUtils.getPayloadFromJwt(authHeader);
+//		Claims payload = jwtUtils.getPayloadFromJwt(authHeader);
+		Claims payload = jwtUtils.getPayloadFromJwt(token);
 		
 		System.out.println("Payload : "+payload);
 		int userId = Integer.parseInt(payload.get("userid").toString());
@@ -74,4 +76,29 @@ public class TeacherController {
 				
 		return classRoomService.getClassroomDetails(classroomId);
 	}
+	
+//	 for teacher dashboard 
+	@PreAuthorize("hasAnyRole('TEACHER', 'USER')")
+	@GetMapping("/get-teacher-dashboard")
+	public  ResponseDto getAllCount(@RequestHeader("Authorization") String authHeader) {
+		
+//		String token = authHeader.replace("Bearer ","");
+//		Claims payload = jwtUtils.getPayloadFromJwt(token);
+		
+		String token = authHeader.replace("Bearer ","");
+		
+		System.out.println("Token With bearer : "+authHeader);
+		Claims payload = jwtUtils.getPayloadFromJwt(token);
+		
+		System.out.println("Payload : "+payload);
+		int userId = Integer.parseInt(payload.get("userid").toString());
+
+		System.out.println("User ID : "+userId);
+		
+		ResponseDto dto = userService.teacherServiceDashboard(userId);
+		System.out.println("------------------------------------------------------------------------"+dto);
+		return dto;
+	}
+	
+	 
 }
