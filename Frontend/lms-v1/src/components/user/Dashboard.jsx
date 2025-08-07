@@ -13,39 +13,7 @@ import {
   Cell
 } from "recharts";
 
-/*
-const [counts, setCounts] = useState({});
-  const [teacherName, setTeacherName] = useState("");
 
-  const getAllCount = async () => {
-    try {
-      const result = await getAllCountTeacherDashboard();
-      console.log("result : ", result.data);
-
-      setCounts(result?.data);
-
-      // Extract teacher name (extra key)
-      const allowedKeys = ["assignments", "classrooms", "students"];
-      const extraKeys = Object.keys(result.data).filter(
-        (key) => !allowedKeys.includes(key)
-      );
-
-      console.log("This is teacher name: ", extraKeys);
-
-      // Set the first extra key as teacher name
-      if (extraKeys.length > 0) {
-        setTeacherName(extraKeys[0]);
-      }
-    } catch (error) {
-      console.error("Error fetching count data", error);
-    }
-  };
-
-  useEffect(() => {
-    getAllCount();
-  }, []);
-
-*/
 
 const Dashboard = () => {
   const COLORS = ['#0d6efd', '#6610f2', '#6f42c1', '#d63384', '#dc3545', '#fd7e14', '#ffc107', '#20c997'];
@@ -87,7 +55,7 @@ const Dashboard = () => {
   return (
     <>
       <div className="teacher-dashboard container-fluid py-4">
-        <h2 className="mb-4 fw-bold">Student Dashboard <br /> Welcome, {studentName}</h2>
+        <h2 className="mb-4 fw-bold"><br /> Welcome, {studentName}</h2>
 
         <div className="row g-4 mb-4">
           <StatCard

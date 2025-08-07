@@ -59,7 +59,7 @@ function TeacherDashboard() {
     <>
       <div className="teacher-dashboard container-fluid py-4">
 
-        <h2 className="mb-4 fw-bold">Teacher Dashboard <br /> Welcome, {teacherName}</h2>
+        <h2 className="mb-4 fw-bold"><br /> Welcome, {teacherName}</h2>
 
         {/* Top Stat Cards */}
         <div className="row g-4 mb-4">

@@ -1,39 +1,28 @@
-<<<<<<< HEAD:Frontend/lms-v1/src/components/user/commons/Sidebar.jsx
 
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { getJoinedClassroomService } from "../../../service/StudentService";
-import "../user.css";
+
+import { getJoinedClassroomService } from "../../../../service/StudentService";
 
 export default function Sidebar() {
   const [joinedClassroom, setJoinedClassroom] = useState([]);
-=======
-import React, { useEffect, useState } from 'react';
 
-import { NavLink } from 'react-router-dom'
-import { getJoinedClassroomService } from '../../../../service/StudentService';
-import  './sidebar.css';
 
->>>>>>> 7471e0b885c8e04a1d259ff561f07c2eee80a839:Frontend/lms-v1/src/components/user/commons/Sidebar/Sidebar.jsx
 
   useEffect(() => {
     const fetchJoinedClassroom = async () => {
       const result = await getJoinedClassroomService();
 
-<<<<<<< HEAD:Frontend/lms-v1/src/components/user/commons/Sidebar.jsx
       console.log("Joined classroom : ",result.data);
       setJoinedClassroom(result.data);
-    };
-=======
-
-const Sidebar = () => {
-  
-
-  const [joinedClassroom,setJoinedClassroom] = useState([]);
->>>>>>> 7471e0b885c8e04a1d259ff561f07c2eee80a839:Frontend/lms-v1/src/components/user/commons/Sidebar/Sidebar.jsx
+    }
 
     fetchJoinedClassroom();
-  }, []);
+  
+  },[]);
+
+
+
 
   return (
     <div className="student-sidebar">
@@ -117,12 +106,6 @@ const Sidebar = () => {
         </li>
       </ul>
     </div>
-<<<<<<< HEAD:Frontend/lms-v1/src/components/user/commons/Sidebar.jsx
+
   );
-=======
-  )
-
->>>>>>> 7471e0b885c8e04a1d259ff561f07c2eee80a839:Frontend/lms-v1/src/components/user/commons/Sidebar/Sidebar.jsx
 }
-
-export default Sidebar
