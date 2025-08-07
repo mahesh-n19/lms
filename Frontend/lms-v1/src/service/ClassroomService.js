@@ -7,6 +7,8 @@ export async function createClassroomService(data)
 {
     try{
              const token = sessionStorage.getItem('token');
+             console.log("Token:", token);
+
              const url= `${API_URL}/create-classroom`;
 
              const body = {

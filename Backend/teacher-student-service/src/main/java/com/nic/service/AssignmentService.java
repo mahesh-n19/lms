@@ -6,7 +6,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nic.dto.AssignmentDto;
 import com.nic.dto.EvaluateDto;
-import com.nic.dto.GetAssignmentDto;
 import com.nic.dto.SubmitAssignmentDto;
 import com.nic.entity.Assignment;
 import com.nic.entity.ResponseDto;
@@ -30,7 +29,6 @@ public interface AssignmentService {
   public ResponseDto evaluateSubmissionBuSubmissionId(long submissionId, EvaluateDto evaluate);
 
   List<AssignmentDto> getAllAssignmentAvailable(int classroomId);
-  
-  public ResponseDto getAdminCount();
-  
+
+  public ResponseDto getAdminCount();  
 }

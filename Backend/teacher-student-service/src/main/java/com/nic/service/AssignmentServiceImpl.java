@@ -54,7 +54,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 	 
 	 @Autowired
 	 private UserRepository userRepo;
-
+	 
 	 @Autowired
 	 private ClassroomDetailsRepo classroomRepo;
 	@Transactional
@@ -329,12 +329,10 @@ public class AssignmentServiceImpl implements AssignmentService {
 
 	@Override
 	public ResponseDto getAdminCount() {
-		
 		int teacherCount = userRepo.countTeacher();
 		int studentCount=userRepo.countStudent();
 		int classroomCount=classroomRepo.countClassrooms();
 		int assignmentsCount=assignmentRepo.countAssignments();
-		System.out.println("Teacher count : "+teacherCount);
 		
 		ResponseDto response = new ResponseDto();
 		
@@ -352,6 +350,5 @@ public class AssignmentServiceImpl implements AssignmentService {
 	}
 	
 }
-
 
 

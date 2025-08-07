@@ -10,9 +10,7 @@ import com.nic.config.User;
 public interface UserRepository extends JpaRepository<User, Integer>{
 	
 	
-	public User findByEmail(String email);
-    List<User> findByRole(String role);
-    
+	public User findByEmail(String email);    
     @Query("SELECT COUNT(U) from User U where U.role='ROLE_TEACHER' ")
     public int countTeacher();
     @Query("SELECT COUNT(U) from User U where U.role='ROLE_USER' ")

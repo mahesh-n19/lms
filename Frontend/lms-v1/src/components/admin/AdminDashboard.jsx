@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./AdminDashboard.css";
-import { Link } from "react-router-dom";
 import { getAllCountsService } from "../../service/AdminService";
 import {
   BarChart,
@@ -13,27 +12,28 @@ import {
 } from "recharts";
 
 export default function AdminDashboard() {
-
   const [counts, setCounts] = useState({});
+
   const teacherRegistrationData = [
-  { month: 'Jan', teachers: 4 },
-  { month: 'Feb', teachers: 6 },
-  { month: 'Mar', teachers: 5 },
-  { month: 'Apr', teachers: 8 },
-  { month: 'May', teachers: 3 },
-  { month: 'Jun', teachers: 7 },
-  { month: 'Jul', teachers: 2 },
-  { month: 'Aug', teachers: 5 },
-];
+    { month: "Jan", teachers: 4 },
+    { month: "Feb", teachers: 6 },
+    { month: "Mar", teachers: 5 },
+    { month: "Apr", teachers: 8 },
+    { month: "May", teachers: 3 },
+    { month: "Jun", teachers: 7 },
+    { month: "Jul", teachers: 2 },
+    { month: "Aug", teachers: 5 },
+  ];
 
   const getAllCount = async () => {
+  try {
     const result = await getAllCountsService();
+    console.log("✅ API Full Response:", result);
+    setCounts(result?.data?.data);  } catch (error) {
+    console.error("❌ Failed to fetch counts:", error);
+  }
+};
 
-    console.log("result : ", result.data);
-
-    setCounts(result?.data);
-    //  console.log("counts : ",counts)
-  };
 
   useEffect(() => {
     getAllCount();
@@ -47,25 +47,27 @@ export default function AdminDashboard() {
       <div className="row g-4 mb-4">
         <StatCard
           title="Total Teachers"
-          value={counts.teachers}
+          value={counts.teachers || 0}
           color="primary"
         />
         <StatCard
           title="Total Students"
-          value={counts.students}
+          value={counts.students || 0}
           color="success"
         />
         <StatCard
           title="Total Classrooms"
-          value={counts.classrooms}
+          value={counts.classrooms || 0}
           color="info"
         />
         <StatCard
           title="Total Assignments"
-          value={counts.assignments}
+          value={counts.assignments || 0}
           color="warning"
         />
       </div>
+
+      {/* Teacher Registration Chart */}
       <div className="card shadow-sm p-3 mb-4">
         <h5>Monthly Teacher Registrations</h5>
         <ResponsiveContainer width="100%" height={250}>

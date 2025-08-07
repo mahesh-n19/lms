@@ -34,6 +34,7 @@ public class TeacherController {
 	
 //	@RequestBody ClassroomDetailsDto obj, 
 	
+	@PreAuthorize("hasRole('TEACHER')")
 	@PostMapping("/create-classroom")
 	public ResponseDto createClassRoom(@RequestHeader("Authorization") String authHeader, @RequestBody ClassroomDetailsDto obj )
 	{
@@ -41,7 +42,7 @@ public class TeacherController {
 		String token = authHeader.replace("Bearer ","");
 		
 		System.out.println("Token With bearer : "+authHeader);
-		Claims payload = jwtUtils.getPayloadFromJwt(authHeader);
+		Claims payload = jwtUtils.getPayloadFromJwt(token);
 		
 		System.out.println("Payload : "+payload);
 		int userId = Integer.parseInt(payload.get("userid").toString());

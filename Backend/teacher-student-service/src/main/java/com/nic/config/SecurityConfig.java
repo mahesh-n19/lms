@@ -67,14 +67,25 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
 	{
-		http.authorizeHttpRequests((requests) -> requests.requestMatchers("/api/v1/login", "/api/v1/register").permitAll()
-				 										 .anyRequest().authenticated());
-	
+		http.authorizeHttpRequests((requests) -> 
+	    requests
+	        .requestMatchers("/api/v1/login", "/api/v1/register").permitAll()
+	        .requestMatchers("/ws/**").permitAll() // ✅ already here
+	        .requestMatchers("/topic/**", "/app/**").permitAll() // ✅ ADD this line!
+	        .anyRequest().authenticated()
+	);
 		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 		
 		http.exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint).accessDeniedHandler(accessDeniedHandler));
-		http.csrf(csrf -> csrf.disable());
-		http.cors();
+		http.csrf(csrf -> csrf
+			    .ignoringRequestMatchers("/ws/**", "/topic/**", "/app/**") // ✅ Skip CSRF for SockJS/WebSocket
+			    .disable()
+			);
+	    http.headers(headers -> headers.frameOptions().sameOrigin());
+
+	//	http.csrf(csrf -> csrf.disable());
+	    http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
+
 		http.addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	
 		return http.build();
@@ -84,7 +95,8 @@ public class SecurityConfig {
 		@Bean
 	    public CorsConfigurationSource corsConfigurationSource() {
 	        CorsConfiguration configuration = new CorsConfiguration();
-	        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // Allow REACT app domain
+	      //  configuration.setAllowedOrigins(List.of("http://localhost:5173")); // Allow REACT app domain
+	        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // ✅ exact match
 	        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 	        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
 	        configuration.setAllowCredentials(true); // Allow credentials if needed

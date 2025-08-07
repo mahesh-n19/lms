@@ -10,6 +10,7 @@ import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +34,7 @@ public class JwtUtils {
 	@Value("${spring.app.jwtExpirationMs}")
 	private int jwtExpirationMs; 
 	
+	@Lazy
 	@Autowired
 	private UserService userService;
 	
